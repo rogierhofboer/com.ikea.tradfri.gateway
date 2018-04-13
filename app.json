@@ -1,0 +1,55 @@
+{
+  "id": "com.ikea.tradfri.gateway",
+  "sdk": 2,
+  "name": {
+    "en": "Trådfri Gateway"
+  },
+  "description": {
+    "en": "Trådfri Gateway"
+  },
+  "category": "lights",
+  "version": "0.0.1",
+  "compatibility": ">=1.5.3",
+  "author": {
+    "name": "Rogier Hofboer",
+    "email": "rogier@hofboer.nl"
+  },
+  "permissions": [],
+  "images": {
+    "large": "/assets/images/large.png",
+    "small": "/assets/images/small.png"
+  },
+  "drivers": [
+    {
+      "id": "light",
+      "name": {
+        "en": "Light"
+      },
+      "class": "light",
+      "capabilities": [
+        "onoff",
+        "dim",
+        "light_temperature",
+        "light_hue",
+        "light_saturation"
+      ],
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "images": {
+        "large": "/drivers/light/assets/images/large.png",
+        "small": "/drivers/light/assets/images/small.png"
+      }
+    }
+  ]
+}

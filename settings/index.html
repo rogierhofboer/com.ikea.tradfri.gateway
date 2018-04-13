@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+<head>
+	<script type="text/javascript" src="/homey.js" data-origin="settings"></script>
+</head>
+<body>
+  <h1>IKEA Tradfri Settings</h1>
+	<fieldset>
+		<legend>Gateway Settings</legend>
+		<div class="field row">
+			<button id="discover" class="left">Discover</button>
+		</div>
+		<div class="field row">
+				<label for="name">Hostname</label>
+				<input id="name" type="text" value="" />
+		</div>
+		<div class="field row">
+			<label for="name">Security code</label>
+			<input id="secret" type="text" value="" /> Not stored
+		</div>
+		<div class="field row">
+			<button id="authenticate" class="left">Authenticate</button>
+		</div>
+		
+		<div class="field row">
+				<label for="identity">Identity</label>
+				<input id="identity" type="text" value="" />
+		</div>
+		<div class="field row">
+				<label for="psk">PSK</label>
+				<input id="psk" type="text" value="" />
+		</div>
+	</fieldset>
+	<button id="save" class="left">Save</button>
+	
+	<script type="text/javascript">
+
+	function onHomeyReady(Homey) {
+						
+			var nameElement = document.getElementById('name');
+			var identityElement = document.getElementById('identity');
+			var secretElement = document.getElementById('secret');
+			var pskElement = document.getElementById('psk');
+			var saveElement = document.getElementById('save');
+			var authenticateElement = document.getElementById('authenticate');
+			var discoverElement = document.getElementById('discover');
+			
+			Homey.get('name', function (err, name) {
+				if (err) return Homey.alert(err);
+				nameElement.value = name;
+			});
+
+			Homey.get('identity', function (err, identity) {
+				if (err) return Homey.alert(err);
+				identityElement.value = identity;
+			});
+			
+			Homey.get('psk', function (err, psk) {
+				if (err) return Homey.alert(err);
+				pskElement.value = psk;
+			});
+
+			discoverElement.addEventListener('click', function (e) {
+				Homey.api('POST', '/discover', null, function (err, result) {
+					if (err) return Homey.alert(err);
+					nameElement.value = result.addresses[0];
+				});
+			});
+					
+			authenticateElement.addEventListener('click', function (e) {
+					Homey.api('POST', '/authenticate', { 'name': nameElement.value, 'secret': secretElement.value }, function (err, result) {
+					if (err) return Homey.alert(err);
+					identityElement.value = result.identity;
+					pskElement.value = result.psk;
+				});
+			});
+
+			saveElement.addEventListener('click', function (e) {
+
+				secretElement.value = "";
+				
+				Homey.set('name', nameElement.value, function (err) {
+					if (err) return Homey.alert(err);
+				});
+
+				Homey.set('identity', identityElement.value, function (err) {
+					if (err) return Homey.alert(err);
+				});
+
+				Homey.set('psk', pskElement.value, function (err) {
+					if (err) return Homey.alert(err);
+				});
+
+				Homey.alert("Settings saved");
+
+				Homey.api('POST', '/connect', null, function (err, result) {
+					if (err) return Homey.alert(err);
+				});
+				
+			});
+			
+			Homey.ready();	
+		}
+	</script>
+ </body>
+</html>
