@@ -2,10 +2,10 @@
   "id": "com.ikea.tradfri.gateway",
   "sdk": 2,
   "name": {
-    "en": "Trådfri Gateway"
+    "en": "IKEA Trådfri Gateway"
   },
   "description": {
-    "en": "Trådfri Gateway"
+    "en": "IKEA Trådfri Gateway"
   },
   "category": "lights",
   "version": "0.0.1",
