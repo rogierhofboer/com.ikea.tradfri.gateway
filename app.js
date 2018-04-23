@@ -1,16 +1,21 @@
 'use strict';
 
-const Homey = require('homey');
-const node_tradfri_client = require("node-tradfri-client");
+const   Homey                   = require('homey'),
+        node_tradfri_client     = require("node-tradfri-client");
 
 const lightDriverName = "light";
+const groupDriverName = "group";
 
 class IkeaTradfriGatewayApp extends Homey.App {
     
     onInit() {
         this._gatewayConnected = false;
         this._homeyLightDriver = Homey.ManagerDrivers.getDriver(lightDriverName);
+        this._homeyGroupDriver = Homey.ManagerDrivers.getDriver(groupDriverName);
         this._lights = {};
+        this._groups = {};
+        this._groupScenes = {};
+
         (async (args, callback) => {
             try {
                 await this.connect();
@@ -18,6 +23,13 @@ class IkeaTradfriGatewayApp extends Homey.App {
                 this.log(err.message);
             }
         })();
+
+        new Homey.FlowCardAction('setScene')
+            .register()
+            .registerRunListener( this._onFlowActionSetScene.bind(this) )
+            .getArgument('scene')
+            .registerAutocompleteListener( this._onSceneAutoComplete.bind(this) );
+
         this.log(`Tradfri Gateway App has been initialized`);
     }
 
@@ -59,10 +71,15 @@ class IkeaTradfriGatewayApp extends Homey.App {
             .on("reconnecting", (att, max) => this.log(`reconnect attempt ${att} of ${max}`))
             .on("give up", () => this.log("giving up..."))
             .on("device updated", this._deviceUpdated.bind(this))
-            .on("device removed", this._deviceRemoved.bind(this));
+            .on("device removed", this._deviceRemoved.bind(this))
+            .on("group updated", this._groupUpdated.bind(this))
+            .on("group removed", this._groupRemoved.bind(this))
+            .on("scene updated", this._sceneUpdated.bind(this))
+            .on("scene removed", this._sceneRemoved.bind(this));
         await this._tradfri.connect(Homey.ManagerSettings.get('identity'), Homey.ManagerSettings.get('psk'));
         this._gatewayConnected = true;
         this._tradfri.observeDevices();
+        this._tradfri.observeGroupsAndScenes();
     }
 
     isGatewayConnected() {
@@ -77,13 +94,30 @@ class IkeaTradfriGatewayApp extends Homey.App {
         return this._lights;
     }
 
+    getGroups() {
+        return this._groups;
+    }
+
+    getScenes(groupId) {
+        return this._groupScenes[groupId];
+    }
+
     operateLight(tradfriInstanceId, commands) {
         let acc = this._lights[tradfriInstanceId];
-        if (typeof acc != "undefined") {
-            this._tradfri.operateLight(acc, commands);
-            return Promise.resolve();
-        }
+        if (typeof acc !== "undefined")
+            return this._tradfri.operateLight(acc, commands);
+
         return Promise.reject("light not found");
+    }
+
+    operateGroup(tradfriInstanceId, commands) {
+        this.log('Sending command',commands);
+        let group = this._groups[tradfriInstanceId];
+        //this.log('Sending command',commands);
+        if (typeof group !== "undefined")
+            return this._tradfri.operateGroup(group, commands, true);
+        this.log(`Group with id ${tradfriInstanceId} not found`);
+        return Promise.reject("group not found");
     }
 
     _deviceUpdated(acc) {
@@ -99,6 +133,41 @@ class IkeaTradfriGatewayApp extends Homey.App {
         if (acc.type === node_tradfri_client.AccessoryTypes.lightbulb) {
             delete this._lights[acc.instanceId];
         }
+    }
+
+    _groupUpdated(group) {
+        this.log(`Group ${group.name} updated`);
+        this._groups[group.instanceId] = group;
+        this._homeyGroupDriver.updateCapabilities(group);
+    }
+
+    _groupRemoved(instanceId) {
+        this.log(`Group ${instanceId} removed`);
+        delete this._groups[instanceId];
+    }
+
+    _sceneUpdated(groupId, scene) {
+        this.log(`Scene ${scene.name} updated`);
+        if(!this._groupScenes[groupId])
+            this._groupScenes[groupId] = {};
+        this._groupScenes[groupId][scene.instanceId] = scene;
+    }
+
+    _sceneRemoved(groupId, instanceId) {
+        this.log(`Scene ${instanceId} removed`);
+        if(this._groupScenes[groupId])
+            delete this._groupScenes[groupId][instanceId];
+    }
+
+    _onFlowActionSetScene( args ) {
+        return this.operateGroup(args.group._tradfriInstanceId, { transitionTime:1, onOff:true, sceneId:args.scene.instanceId });
+    }
+
+    _onSceneAutoComplete( query, args ) {
+        const scenes = this.getScenes(args.group._tradfriInstanceId);
+        return Object.values(scenes).map(s => {
+            return {instanceId: s.instanceId, name:s.name}
+        });
     }
 }
 module.exports = IkeaTradfriGatewayApp;
