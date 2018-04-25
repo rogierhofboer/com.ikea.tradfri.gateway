@@ -14,6 +14,14 @@
     "name": "Rogier Hofboer",
     "email": "rogier@hofboer.nl"
   },
+  "contributors": {
+    "developers": [
+      {
+        "name": "Espen Ljosland",
+        "email": "espen@ljosland.com"
+      }
+    ]
+  },
   "permissions": [],
   "images": {
     "large": "/assets/images/large.png",
@@ -50,6 +58,55 @@
         "large": "/drivers/light/assets/images/large.png",
         "small": "/drivers/light/assets/images/small.png"
       }
+    },
+    {
+      "id": "group",
+      "name": {
+        "en": "Group"
+      },
+      "class": "light",
+      "capabilities": [
+        "onoff",
+        "dim"
+      ],
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "images": {
+        "large": "/drivers/light/assets/images/large.png",
+        "small": "/drivers/light/assets/images/small.png"
+      }
     }
-  ]
+  ],
+  "flow": {
+    "actions": [
+      {
+        "id": "setScene",
+        "title": {
+          "en": "Set a mood"
+        },
+        "args": [
+          {
+            "name": "group",
+            "type": "device",
+            "filter": "driver_id=group"
+          },
+          {
+            "name": "scene",
+            "type": "autocomplete"
+          }
+        ]
+      }
+    ]
+  }
 }
