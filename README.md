@@ -13,6 +13,8 @@ https://github.com/AlCalzone/node-tradfri-client
 Thanks to Robert Klep for answering my questions on slack and making homey-app-upload
 https://github.com/robertklep/homey-app-upload
 
+Thanks to Espen Ljosland for adding group support
+
 ## TODO 
 - Make non-IKEA lights work, like Hue (they do work on the Gateway using the IKEA app, but are not yet recognized correctly by node-tradfri-client, see: https://github.com/AlCalzone/node-tradfri-client/issues/69)
 - Support renaming of devices (so Tradfri Gateway device names and Homey device names stay in sync)
