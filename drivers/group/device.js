@@ -41,6 +41,10 @@ class MyDevice extends Homey.Device {
 				commands["onOff"] = value;
 			}
 		}
+
+		if(!Number.isNaN(commands["dimmer"]))
+            commands["onOff"] = commands["dimmer"] > 0;
+
 		return Homey.app.operateGroup(this._tradfriInstanceId, commands)
 	}
 }
