@@ -85,7 +85,20 @@
       "images": {
         "large": "/drivers/light/assets/images/large.png",
         "small": "/drivers/light/assets/images/small.png"
-      }
+      },
+      "settings": [
+        {
+          "id": "force_individual_dim",
+          "type": "checkbox",
+          "label": {
+            "en": "Force set dim value individually for each light"
+          },
+          "hint": {
+            "en": "Enable this if you experience issues where not all lights in group are dimmed to requested value."
+          },
+          "value": false
+        }
+      ]
     }
   ],
   "flow": {

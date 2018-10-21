@@ -94,6 +94,10 @@ class IkeaTradfriGatewayApp extends Homey.App {
         return this._lights;
     }
 
+    getGroup(tradfriInstanceId) {
+        return this._groups[tradfriInstanceId];
+    }
+
     getGroups() {
         return this._groups;
     }
@@ -113,7 +117,7 @@ class IkeaTradfriGatewayApp extends Homey.App {
     operateGroup(tradfriInstanceId, commands) {
         this.log('Sending command',commands);
         let group = this._groups[tradfriInstanceId];
-        //this.log('Sending command',commands);
+
         if (typeof group !== "undefined")
             return this._tradfri.operateGroup(group, commands, true);
         this.log(`Group with id ${tradfriInstanceId} not found`);
@@ -125,6 +129,12 @@ class IkeaTradfriGatewayApp extends Homey.App {
             this.log(`${acc.name} updated`);
             this._lights[acc.instanceId] = acc;
             this._homeyLightDriver.updateCapabilities(acc);
+
+            //Update dim values on group if lights are updated individually or through scene
+            for (const [groupInstanceId, group] of Object.entries(this._groups)) {
+                if (group.deviceIDs && group.deviceIDs.indexOf(acc.instanceId) > -1)
+                    this._homeyGroupDriver.deviceInGroupUpdated(group);
+            }
         }
     }
 

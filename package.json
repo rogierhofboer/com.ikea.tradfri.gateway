@@ -4,6 +4,7 @@
   "description": "This app allows you to connect the IKEA Trådfri gateway to Homey",
   "main": "app.js",
   "dependencies": {
+    "lodash.debounce": "^4.0.8",
     "node-tradfri-client": "git+https://github.com/AlCalzone/node-tradfri-client.git"
   },
   "scripts": {

@@ -14,6 +14,12 @@ class MyDriver extends Homey.Driver {
 		if (homeyDevice instanceof Error) return; 
 		homeyDevice.updateCapabilities(tradfriGroup);
 	}
+
+    deviceInGroupUpdated(tradfriGroup) {
+        let homeyDevice = this.getDevice({id: tradfriGroup.instanceId});
+        if (homeyDevice instanceof Error) return;
+        homeyDevice.deviceInGroupUpdated(tradfriGroup);
+	}
 	
 	onPairListDevices(data, callback) {
 		let devices = [];
