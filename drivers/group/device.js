@@ -10,7 +10,9 @@ class MyDevice extends Homey.Device {
 	onInit() {
 		this._tradfriInstanceId = this.getData().id;
 		this._dimSetByCode = false;
+        this._resetSetByCodeDebounce = debounce(() => { this._dimSetByCode = false; }, 1000);
 		this._calculateDimDebounce = debounce(this._calculateDim.bind(this), 300);
+
 
 		this.registerMultipleCapabilityListener(this.getCapabilities(), this._onMultipleCapabilityListener.bind(this), CAPABILITIES_SET_DEBOUNCE);
 
@@ -41,13 +43,7 @@ class MyDevice extends Homey.Device {
 	}
 
 	_calculateDim() {
-        if(this._dimSetByCode)
-        {
-            this._dimSetByCode = false;
-            return;
-        }
-
-        if (this.getCapabilityValue("onoff") === false || !this.hasCapability("dim"))
+        if(this._dimSetByCode || !this.hasCapability("dim"))
         	return;
 
         let dimValues = [];
@@ -70,6 +66,9 @@ class MyDevice extends Homey.Device {
                 this.log('Adjusting dim value based on avg by devices:', avgDim);
 				this.setCapabilityValue("dim", avgDim / 100).catch(this.error);
             }
+
+            if(avgDim > 0 !== this.getCapabilityValue("onoff"))
+                this.setCapabilityValue("onoff", avgDim > 0).catch(this.error);
         }
     }
 
@@ -78,7 +77,6 @@ class MyDevice extends Homey.Device {
 		for (const [key, value] of Object.entries(valueObj)) {
 			if (key === "dim") {
 				commands["dimmer"] = value * 100;
-                this._dimSetByCode = true;
 			}
 			else if (key === "onoff") {
 				commands["onOff"] = value;
@@ -103,6 +101,9 @@ class MyDevice extends Homey.Device {
                 }
             }
         }
+
+        this._dimSetByCode = true;
+        this._resetSetByCodeDebounce();
 
 		return Homey.app.operateGroup(this._tradfriInstanceId, commands)
 	}
