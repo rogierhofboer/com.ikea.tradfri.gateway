@@ -8,7 +8,7 @@
     "en": "IKEA Trådfri Gateway"
   },
   "category": "lights",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "compatibility": ">=1.5.3",
   "author": {
     "name": "Rogier Hofboer",
@@ -19,6 +19,10 @@
       {
         "name": "Espen Ljosland",
         "email": "espen@ljosland.com"
+      },
+      {
+        "name": "Sven ten Raa",
+        "email": "sventenraa@gmail.com"
       }
     ]
   },
@@ -99,6 +103,34 @@
           "value": false
         }
       ]
+    },
+    {
+      "id": "plug",
+      "name": {
+        "en": "Plug"
+      },
+      "class": "socket",
+      "capabilities": [
+        "onoff",
+        "meter_power"
+      ],
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "images": {
+        "large": "/drivers/plug/assets/images/large.png",
+        "small": "/drivers/plug/assets/images/small.png"
+      }
     }
   ],
   "flow": {
