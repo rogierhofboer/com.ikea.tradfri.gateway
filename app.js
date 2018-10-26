@@ -5,13 +5,16 @@ const   Homey                   = require('homey'),
 
 const lightDriverName = "light";
 const groupDriverName = "group";
+const plugDriverName  = "plug";
 
 class IkeaTradfriGatewayApp extends Homey.App {
     
     onInit() {
         this._gatewayConnected = false;
+        this._homeyPlugDriver = Homey.ManagerDrivers.getDriver(plugDriverName);
         this._homeyLightDriver = Homey.ManagerDrivers.getDriver(lightDriverName);
         this._homeyGroupDriver = Homey.ManagerDrivers.getDriver(groupDriverName);
+        this._plugs = {};
         this._lights = {};
         this._groups = {};
         this._groupScenes = {};
@@ -86,6 +89,14 @@ class IkeaTradfriGatewayApp extends Homey.App {
         return this._gatewayConnected;
     }
 
+    getPlugs() {
+        return this._plugs;
+    }
+
+    getPlug(tradfriInstanceId) {
+        return this._plugs[tradfriInstanceId];
+    }
+
     getLight(tradfriInstanceId) {
         return this._lights[tradfriInstanceId];
     }
@@ -104,6 +115,14 @@ class IkeaTradfriGatewayApp extends Homey.App {
 
     getScenes(groupId) {
         return this._groupScenes[groupId];
+    }
+
+    operatePlug(tradfriInstanceId, commands) {
+        let acc = this._plugs[tradfriInstanceId];
+        if (typeof acc !== "undefined")
+            return this._tradfri.operatePlug(acc, commands);
+
+        return Promise.reject("plug not found");
     }
 
     operateLight(tradfriInstanceId, commands) {
@@ -136,12 +155,20 @@ class IkeaTradfriGatewayApp extends Homey.App {
                     this._homeyGroupDriver.deviceInGroupUpdated(group);
             }
         }
+        if (acc.type === node_tradfri_client.AccessoryTypes.plug) {
+            this.log(`${acc.name} updated`);
+            this._plugs[acc.instanceId] = acc;
+            this._homeyPlugDriver.updateCapabilities(acc);
+        }
     }
 
     _deviceRemoved(acc) {
         this.log(`${acc.name} removed`);
         if (acc.type === node_tradfri_client.AccessoryTypes.lightbulb) {
             delete this._lights[acc.instanceId];
+        }
+        if (acc.type === node_tradfri_client.AccessoryTypes.plug) {
+            delete this._plugs[acc.instanceId];
         }
     }
 
