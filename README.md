@@ -14,6 +14,7 @@ Thanks to Robert Klep for answering my questions on slack and making homey-app-u
 https://github.com/robertklep/homey-app-upload
 
 Thanks to Espen Ljosland for adding group support
+
 Thanks to Sven ten Raa for adding wall socket support
 
 ## TODO 
