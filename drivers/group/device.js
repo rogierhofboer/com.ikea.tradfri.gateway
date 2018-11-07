@@ -54,7 +54,7 @@ class MyDevice extends Homey.Device {
 			{
 				const device = light.lightList[0];
 				if(device.dimmer)
-                	dimValues.push(device.dimmer);
+                	dimValues.push(device.onOff ? device.dimmer : 0);
 			}
         });
 
@@ -68,7 +68,10 @@ class MyDevice extends Homey.Device {
             }
 
             if(avgDim > 0 !== this.getCapabilityValue("onoff"))
+            {
+                this.log('Setting onoff to:', avgDim > 0);
                 this.setCapabilityValue("onoff", avgDim > 0).catch(this.error);
+            }
         }
     }
 
