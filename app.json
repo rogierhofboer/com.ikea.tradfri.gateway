@@ -8,7 +8,7 @@
     "en": "IKEA Trådfri Gateway"
   },
   "category": "lights",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "compatibility": ">=1.5.3",
   "author": {
     "name": "Rogier Hofboer",
