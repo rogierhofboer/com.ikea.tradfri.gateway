@@ -40,7 +40,6 @@ class IkeaTradfriGatewayApp extends Homey.App {
     }
 
     async discover() {
-        node_tradfri_client
             return node_tradfri_client.discoverGateway();
     }
 
@@ -143,7 +142,7 @@ class IkeaTradfriGatewayApp extends Homey.App {
         if (typeof acc !== "undefined")
             return this._tradfri.operateBlind(acc, commands);
 
-        return Promise.reject("plug not found");
+        return Promise.reject("blind not found");
     }
 
     operateLight(tradfriInstanceId, commands) {
