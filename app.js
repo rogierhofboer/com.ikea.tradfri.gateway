@@ -183,7 +183,7 @@ class IkeaTradfriGatewayApp extends Homey.App {
 
         if (acc.type === node_tradfri_client.AccessoryTypes.blind) {
             this.log(`${acc.name} updated`);
-            this._plugs[acc.instanceId] = acc;
+            this._blinds[acc.instanceId] = acc;
             this._homeyBlindDriver.updateCapabilities(acc);
         }
     }
