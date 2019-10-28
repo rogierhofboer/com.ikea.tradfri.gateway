@@ -6,15 +6,18 @@ const   Homey                   = require('homey'),
 const lightDriverName = "light";
 const groupDriverName = "group";
 const plugDriverName  = "plug";
+const BlindDriverName  = "blind";
 
 class IkeaTradfriGatewayApp extends Homey.App {
     
     onInit() {
         this._gatewayConnected = false;
         this._homeyPlugDriver = Homey.ManagerDrivers.getDriver(plugDriverName);
+        this._homeyBlindDriver = Homey.ManagerDrivers.getDriver(BlindDriverName);
         this._homeyLightDriver = Homey.ManagerDrivers.getDriver(lightDriverName);
         this._homeyGroupDriver = Homey.ManagerDrivers.getDriver(groupDriverName);
         this._plugs = {};
+        this._blinds = {};
         this._lights = {};
         this._groups = {};
         this._groupScenes = {};
@@ -37,6 +40,7 @@ class IkeaTradfriGatewayApp extends Homey.App {
     }
 
     async discover() {
+        node_tradfri_client
             return node_tradfri_client.discoverGateway();
     }
 
@@ -97,6 +101,15 @@ class IkeaTradfriGatewayApp extends Homey.App {
         return this._plugs[tradfriInstanceId];
     }
 
+    getBlinds() {
+        return this._blinds;
+    }
+
+    getBlind(tradfriInstanceId) {
+        return this._blinds[tradfriInstanceId];
+    }
+
+
     getLight(tradfriInstanceId) {
         return this._lights[tradfriInstanceId];
     }
@@ -121,6 +134,14 @@ class IkeaTradfriGatewayApp extends Homey.App {
         let acc = this._plugs[tradfriInstanceId];
         if (typeof acc !== "undefined")
             return this._tradfri.operatePlug(acc, commands);
+
+        return Promise.reject("plug not found");
+    }
+
+    operateBlind(tradfriInstanceId, commands) {
+        let acc = this._blinds[tradfriInstanceId];
+        if (typeof acc !== "undefined")
+            return this._tradfri.operateBlind(acc, commands);
 
         return Promise.reject("plug not found");
     }
@@ -160,6 +181,12 @@ class IkeaTradfriGatewayApp extends Homey.App {
             this._plugs[acc.instanceId] = acc;
             this._homeyPlugDriver.updateCapabilities(acc);
         }
+
+        if (acc.type === node_tradfri_client.AccessoryTypes.blind) {
+            this.log(`${acc.name} updated`);
+            this._plugs[acc.instanceId] = acc;
+            this._homeyBlindDriver.updateCapabilities(acc);
+        }
     }
 
     _deviceRemoved(acc) {
@@ -169,6 +196,10 @@ class IkeaTradfriGatewayApp extends Homey.App {
         }
         if (acc.type === node_tradfri_client.AccessoryTypes.plug) {
             delete this._plugs[acc.instanceId];
+        }
+
+        if (acc.type === node_tradfri_client.AccessoryTypes.blind) {
+            delete this._blinds[acc.instanceId];
         }
     }
 

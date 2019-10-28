@@ -8,7 +8,7 @@
     "en": "IKEA Trådfri Gateway"
   },
   "category": "lights",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "compatibility": ">=1.5.3",
   "author": {
     "name": "Rogier Hofboer",
@@ -134,6 +134,33 @@
       "images": {
         "large": "/drivers/plug/assets/images/large.png",
         "small": "/drivers/plug/assets/images/small.png"
+      }
+    },
+    {
+      "id": "blind",
+      "name": {
+        "en": "Blind"
+      },
+      "class": "socket",
+      "capabilities": [
+        "onoff"
+      ],
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "images": {
+        "large": "/drivers/blind/assets/images/large.png",
+        "small": "/drivers/blind/assets/images/small.png"
       }
     }
   ],
