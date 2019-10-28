@@ -27,9 +27,9 @@ class MyDriver extends Homey.Driver {
 			for (const device of Object.values(blinds)) {
 				let blind = device.blindList[0];
 				let capabilities = [];
-				if (blind.isSwitchable) {
-				    capabilities.push("onoff");
-			    }
+				capabilities.push("open");
+				capabilities.push("close");
+				capabilities.push("setPosition");
 				devices.push({
 					data: {
 						id: device.instanceId,

@@ -141,7 +141,7 @@
       "name": {
         "en": "Blind"
       },
-      "class": "socket",
+      "class": "other",
       "capabilities": [
         "onoff"
       ],
