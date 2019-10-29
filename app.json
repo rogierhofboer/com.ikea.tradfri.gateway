@@ -139,11 +139,14 @@
     {
       "id": "blind",
       "name": {
-        "en": "Blind"
+        "en": "Roller Blind",
+        "nl": "Rolgordijn",
+        "de": "Rollo"
       },
-      "class": "other",
+      "class": "blinds",
       "capabilities": [
-        "onoff"
+        "onoff",
+        "windowcoverings_set"
       ],
       "pair": [
         {

@@ -33,21 +33,8 @@ class MyDevice extends Homey.Device {
 					.catch(this.error);
 			}
 
-			// todo: create custom driver capacity
-			// https://apps.developer.athom.com/tutorial-Drivers-Capabilities.html
-
-			if (this.hasCapability("open")) {
-				this.setCapabilityValue("open", blind.open)
-					.catch(this.error);
-			}
-
-			if (this.hasCapability("close")) {
-				this.setCapabilityValue("close", blind.close)
-					.catch(this.error);
-			}
-
-			if (this.hasCapability("setPosition")) {
-				this.setCapabilityValue("setPosition", blind.setPosition / 100)
+			if (this.hasCapability("windowcoverings_set")) {
+				this.setCapabilityValue("windowcoverings_set", blind.setPosition)
 					.catch(this.error);
 			}
 
@@ -63,15 +50,8 @@ class MyDevice extends Homey.Device {
 			if (key === "onoff") {
 				commands["onoff"] = value;
 			}
-
-			if (key === "open") {
-				commands["open"] = value;
-			}
-			else if (key === "close") {
-				commands["close"] = value;
-			}
-			else if (key === "setPosition") {
-				commands["setPosition"] = value * 100;
+			else if (key === "windowcoverings_set") {
+				commands["setPosition"] = value;
 			}
 		}
 		return Homey.app.operateBlind(this._tradfriInstanceId, commands)

@@ -25,11 +25,9 @@ class MyDriver extends Homey.Driver {
 		{
 			let blinds = Homey.app.getBlinds();
 			for (const device of Object.values(blinds)) {
-				let blind = device.blindList[0];
 				let capabilities = [];
-				capabilities.push("open");
-				capabilities.push("close");
-				capabilities.push("setPosition");
+				capabilities.push("onoff");
+				capabilities.push("windowcoverings_set");
 				devices.push({
 					data: {
 						id: device.instanceId,
