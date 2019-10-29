@@ -138,6 +138,7 @@ class IkeaTradfriGatewayApp extends Homey.App {
     }
 
     operateBlind(tradfriInstanceId, commands) {
+        this.log(`operateBlind: {${tradfriInstanceId}},{${JSON.stringify(commands)}}`);
         let acc = this._blinds[tradfriInstanceId];
         if (typeof acc !== "undefined")
             return this._tradfri.operateBlind(acc, commands);
@@ -164,6 +165,7 @@ class IkeaTradfriGatewayApp extends Homey.App {
     }
 
     _deviceUpdated(acc) {
+        this.log(`_deviceUpdated name and type: {${acc.name}},{${acc.type}}`);
         if (acc.type === node_tradfri_client.AccessoryTypes.lightbulb) {
             this.log(`${acc.name} updated`);
             this._lights[acc.instanceId] = acc;

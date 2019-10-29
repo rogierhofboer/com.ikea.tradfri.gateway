@@ -46,7 +46,7 @@ class MyDevice extends Homey.Device {
 	_onMultipleCapabilityListener(valueObj, optsObj) {
 		let commands = {};
 		for (const [key, value] of Object.entries(valueObj)) {
-
+			//const apiMethods = ["open", "close", "setPosition"];
 			if (key === "onoff") {
 				commands["onoff"] = value;
 			}
