@@ -26,8 +26,11 @@ class MyDriver extends Homey.Driver {
 			let blinds = Homey.app.getBlinds();
 			for (const device of Object.values(blinds)) {
 				let capabilities = [];
+				//Todo: Fetch capabilities from the app.json file
 				capabilities.push("onoff");
 				capabilities.push("windowcoverings_set");
+				capabilities.push("measure_battery");
+				capabilities.push("alarm_battery");
 				devices.push({
 					data: {
 						id: device.instanceId,

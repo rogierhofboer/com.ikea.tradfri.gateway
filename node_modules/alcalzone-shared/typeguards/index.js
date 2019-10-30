@@ -1,4 +1,5 @@
 "use strict";
+/** @module typeguards */
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * Tests whether the given variable is a real object and not an Array
