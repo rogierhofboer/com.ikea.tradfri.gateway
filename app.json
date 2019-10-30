@@ -137,7 +137,7 @@
       }
     },
     {
-      "id": "blind",
+      "id": "blinds",
       "name": {
         "en": "Roller Blind",
         "nl": "Rolgordijn",
@@ -145,7 +145,6 @@
       },
       "class": "blinds",
       "capabilities": [
-        "onoff",
         "measure_battery",
         "windowcoverings_set"
       ],
@@ -163,8 +162,8 @@
         }
       ],
       "images": {
-        "large": "/drivers/blind/assets/images/large.png",
-        "small": "/drivers/blind/assets/images/small.png"
+        "large": "/drivers/blinds/assets/images/large.png",
+        "small": "/drivers/blinds/assets/images/small.png"
       }
     }
   ],

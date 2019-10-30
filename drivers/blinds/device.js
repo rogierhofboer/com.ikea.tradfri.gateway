@@ -48,10 +48,10 @@ class MyDevice extends Homey.Device {
 		for (const [key, value] of Object.entries(valueObj)) {
 			//const apiMethods = ["open", "close", "setPosition"];
 			if (key === "onoff") {
-				commands["onoff"] = value;
+				commands["position"] = value;
 			}
 			else if (key === "windowcoverings_set") {
-				commands["setPosition"] = value;
+				commands["position"] = value;
 			}
 		}
 		return Homey.app.operateBlind(this._tradfriInstanceId, commands)
