@@ -34,21 +34,21 @@ export declare class SortedList<T> {
     /** Removes a single item from the list */
     private removeOne;
     /** Returns the item at the given index */
-    get(index: number): T;
+    get(index: number): T | undefined;
     /** Removes the first item from the list and returns it */
-    shift(): T;
+    shift(): T | undefined;
     /** Returns the first item from the list without removing it */
-    peekStart(): T;
+    peekStart(): T | undefined;
     /** Removes the last item from the list and returns it */
-    pop(): T;
+    pop(): T | undefined;
     /** Returns the last item from the list without removing it */
-    peekEnd(): T;
+    peekEnd(): T | undefined;
     /** Removes a specific node from the list */
     private removeNode;
     /** Tests if the given item is contained in the list */
     contains(item: T): boolean;
     /** Returns the first item matching the given predicate */
-    find(predicate: (item: T) => boolean): T;
+    find(predicate: (item: T) => boolean): T | undefined;
     /** Returns the first item matching the given predicate */
     private findNodeForItem;
     /** Removes all items from the list */

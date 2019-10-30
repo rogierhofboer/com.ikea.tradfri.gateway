@@ -11,6 +11,7 @@ class MyDevice extends Homey.Device {
 		this._tradfriInstanceId = this.getData().id;
 		let tradfriDevice = Homey.app.getBlind(this._tradfriInstanceId);
 		this.updateCapabilities(tradfriDevice);
+		this.log('blinds this.getCapabilities()',this.getCapabilities());
 		this.registerMultipleCapabilityListener(this.getCapabilities(), this._onMultipleCapabilityListener.bind(this), CAPABILITIES_SET_DEBOUNCE);
 		this.log(`Tradfri Blind ${this.getName()} has been initialized`);
 	}
@@ -32,6 +33,7 @@ class MyDevice extends Homey.Device {
 			//this.log((util.inspect(blind)));
 
 			// check if device is available / online
+			//TODO: cleanup and refactor with const
 			if (!tradfriDevice.alive) {
 				this.log(`tradfriDevice (temporary) unavailable`);
 				this.setUnavailable("(temporary) unavailable")
@@ -51,19 +53,30 @@ class MyDevice extends Homey.Device {
 					this.setCapabilityValue("windowcoverings_set", parseFloat(blind.position/100)) // find out the correct value
 				}
 
-				// find out why this capability is missing
+				// set battery level
 				if (this.hasCapability("measure_battery")) {
-					this.log(`Blind measure_battery ${blind._accessory.deviceInfo.battery}`);
-					this.setCapabilityValue("measure_battery", blind._accessory.deviceInfo.battery)
+					this.log(`Blind measure_battery ${parseInt(blind._accessory.deviceInfo.battery)}`);
+					this.setCapabilityValue("measure_battery", parseInt(blind._accessory.deviceInfo.battery))
 						.catch(this.error);
+
+					// only set alarm if battery is below 20%
+					if (this.hasCapability("alarm_battery") && parseInt(blind._accessory.deviceInfo.battery) >= 20) {
+						this.setCapabilityValue("alarm_battery", true)
+							.catch(this.error);
+					// reset battery warning, battery level should be above 20%
+					}else if(this.getCapabilityValue("alarm_battery") === true) {
+						this.setCapabilityValue("alarm_battery", false)
+						.catch(this.error);
+					}
 				}
+
 			}
 		}
 	}
 
 	_onMultipleCapabilityListener(valueObj, optsObj) {
 		this.log(`Blind _onMultipleCapabilityListener`);
-		this.log((util.inspect(valueObj)));
+		//this.log((util.inspect(valueObj)));
 		let commands = {};
 		for (const [key, value] of Object.entries(valueObj)) {
 			//todo: add other button interaction from the app
@@ -72,7 +85,7 @@ class MyDevice extends Homey.Device {
 				this.log(`Blind windowcoverings_set ${parseFloat(value*100)}`);
 				commands["position"] = parseFloat(value*100);
 			}else{
-				this.log(`the following key is not implemented: ${value}`);
+				this.log(`the following value is not implemented: ${util.inspect(valueObj)}`);
 			}
 		}
 		return Homey.app.operateBlind(this._tradfriInstanceId, commands)
