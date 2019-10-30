@@ -6,7 +6,7 @@ const   Homey                   = require('homey'),
 const lightDriverName = "light";
 const groupDriverName = "group";
 const plugDriverName  = "plug";
-const BlindDriverName  = "blind";
+const BlindDriverName  = "blinds";
 
 class IkeaTradfriGatewayApp extends Homey.App {
     
@@ -130,6 +130,7 @@ class IkeaTradfriGatewayApp extends Homey.App {
     }
 
     operatePlug(tradfriInstanceId, commands) {
+        //this.log('operatePlug: Sending command',commands);
         let acc = this._plugs[tradfriInstanceId];
         if (typeof acc !== "undefined")
             return this._tradfri.operatePlug(acc, commands);
@@ -138,6 +139,7 @@ class IkeaTradfriGatewayApp extends Homey.App {
     }
 
     operateBlind(tradfriInstanceId, commands) {
+        this.log('operateBlind: Sending command',commands);
         let acc = this._blinds[tradfriInstanceId];
         if (typeof acc !== "undefined")
             return this._tradfri.operateBlind(acc, commands);
@@ -146,6 +148,7 @@ class IkeaTradfriGatewayApp extends Homey.App {
     }
 
     operateLight(tradfriInstanceId, commands) {
+        //this.log('operateLight: Sending command',commands);
         let acc = this._lights[tradfriInstanceId];
         if (typeof acc !== "undefined")
             return this._tradfri.operateLight(acc, commands);
@@ -154,7 +157,7 @@ class IkeaTradfriGatewayApp extends Homey.App {
     }
 
     operateGroup(tradfriInstanceId, commands) {
-        this.log('Sending command',commands);
+        //this.log('operateGroup: Sending command',commands);
         let group = this._groups[tradfriInstanceId];
 
         if (typeof group !== "undefined")
@@ -182,8 +185,9 @@ class IkeaTradfriGatewayApp extends Homey.App {
         }
 
         if (acc.type === node_tradfri_client.AccessoryTypes.blind) {
+            //this.log('_deviceUpdated name and type: ',acc);
             this.log(`${acc.name} updated`);
-            this._plugs[acc.instanceId] = acc;
+            this._blinds[acc.instanceId] = acc;
             this._homeyBlindDriver.updateCapabilities(acc);
         }
     }

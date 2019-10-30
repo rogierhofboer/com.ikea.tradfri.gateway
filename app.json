@@ -137,13 +137,15 @@
       }
     },
     {
-      "id": "blind",
+      "id": "blinds",
       "name": {
-        "en": "Blind"
+        "en": "Roller Blind",
+        "nl": "Rolgordijn",
+        "de": "Rollo"
       },
-      "class": "other",
+      "class": "blinds",
       "capabilities": [
-        "onoff"
+        "windowcoverings_set"
       ],
       "pair": [
         {
@@ -159,8 +161,8 @@
         }
       ],
       "images": {
-        "large": "/drivers/blind/assets/images/large.png",
-        "small": "/drivers/blind/assets/images/small.png"
+        "large": "/drivers/blinds/assets/images/large.png",
+        "small": "/drivers/blinds/assets/images/small.png"
       }
     }
   ],
