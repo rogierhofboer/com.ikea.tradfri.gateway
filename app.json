@@ -145,7 +145,6 @@
       },
       "class": "blinds",
       "capabilities": [
-        "measure_battery",
         "windowcoverings_set"
       ],
       "pair": [
