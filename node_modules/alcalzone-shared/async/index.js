@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 function promisify(fn, context) {
     return function (...args) {
+        // @ts-ignore We want this behavior
         context = context || this;
         return new Promise((resolve, reject) => {
             fn.apply(context, [...args, (error, result) => {
@@ -27,6 +28,7 @@ function promisify(fn, context) {
 exports.promisify = promisify;
 function promisifyNoError(fn, context) {
     return function (...args) {
+        // @ts-ignore We want this behavior
         context = context || this;
         return new Promise((resolve) => {
             fn.apply(context, [...args, (result) => {

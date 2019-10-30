@@ -1,9 +1,16 @@
 "use strict";
 const platform = require("os").platform();
 const execSync = require("child_process").execSync;
+const semver = require("semver");
 
 const COMMAND_RPI1 = "npm run install:rpi1";
 const COMMAND_DEFAULT = "npm run install:default";
+
+// Starting with Node 10, we'll fail the installation.
+if (semver.satisfies(process.version, ">= 10")) {
+	console.error("node-aead-crypto is no longer needed on NodeJS 10+")
+	process.exit(1);
+}
 
 function getCommand() {
 	if (platform === "linux") {
