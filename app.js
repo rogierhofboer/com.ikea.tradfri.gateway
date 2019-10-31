@@ -190,6 +190,14 @@ class IkeaTradfriGatewayApp extends Homey.App {
             this._blinds[acc.instanceId] = acc;
             this._homeyBlindDriver.updateCapabilities(acc);
         }
+
+        if (acc.type === node_tradfri_client.AccessoryTypes.signalRepeater) {
+            //this.log(`Signal repeater: ${acc.name} found. Currently not supported.`);
+        }
+
+        if (acc.type === node_tradfri_client.AccessoryTypes.motionSensor) {
+            //this.log(`Motion sensor: ${acc.name} found. Currently not supported.`);
+        }
     }
 
     _deviceRemoved(acc) {
