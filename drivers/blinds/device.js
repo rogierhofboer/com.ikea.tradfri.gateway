@@ -53,6 +53,14 @@ class MyDevice extends Homey.Device {
 					this.setCapabilityValue("windowcoverings_set", parseFloat(blind.position/100)) // find out the correct value
 				}
 
+				if (this.hasCapability("onoff")) {
+					// 100 = closed
+					// 0 = open
+					var isBlindOpen = (blind.position < 100 ? true : false)
+					this.log(`Blind onoff ${parseFloat(blind.position/100)}`);
+					this.setCapabilityValue("onoff", isBlindOpen) // untested
+				}
+
 				// set battery level
 				if (this.hasCapability("measure_battery")) {
 					this.log(`Blind measure_battery ${parseInt(blind._accessory.deviceInfo.battery)}`);
@@ -84,7 +92,12 @@ class MyDevice extends Homey.Device {
 			if (key === "windowcoverings_set") {
 				this.log(`Blind windowcoverings_set ${parseFloat(value*100)}`);
 				commands["position"] = parseFloat(value*100);
-			}else{
+			}else if(key === "onoff"){
+				// 0 = open
+				// 100 = closed
+				commands["position"] = (valueObj ? 0 : 100); // percentage
+			}else
+			{
 				this.log(`the following value is not implemented: ${util.inspect(valueObj)}`);
 			}
 		}
