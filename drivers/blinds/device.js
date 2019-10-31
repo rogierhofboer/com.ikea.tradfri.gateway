@@ -11,7 +11,7 @@ class MyDevice extends Homey.Device {
 		this._tradfriInstanceId = this.getData().id;
 		let tradfriDevice = Homey.app.getBlind(this._tradfriInstanceId);
 		this.updateCapabilities(tradfriDevice);
-		this.log('blinds this.getCapabilities()',this.getCapabilities());
+		//this.log('blinds this.getCapabilities()',this.getCapabilities());
 		this.registerMultipleCapabilityListener(this.getCapabilities(), this._onMultipleCapabilityListener.bind(this), CAPABILITIES_SET_DEBOUNCE);
 		this.log(`Tradfri Blind ${this.getName()} has been initialized`);
 	}
@@ -49,7 +49,7 @@ class MyDevice extends Homey.Device {
 					// 100 = closed
 					// 0 = open
 					// windowcoverings_set has a number range between 0 and 1
-					this.log(`Blind windowcoverings_set ${parseFloat(blind.position/100)}`);
+					//this.log(`Blind windowcoverings_set ${parseFloat(blind.position/100)}`);
 					this.setCapabilityValue("windowcoverings_set", parseFloat(blind.position/100)) // find out the correct value
 				}
 
@@ -68,11 +68,12 @@ class MyDevice extends Homey.Device {
 						.catch(this.error);
 
 					// only set alarm if battery is below 20%
-					if (this.hasCapability("alarm_battery") && parseInt(blind._accessory.deviceInfo.battery) >= 20) {
+					if (this.hasCapability("alarm_battery") && (blind._accessory.deviceInfo.battery < 20)) {
 						this.setCapabilityValue("alarm_battery", true)
 							.catch(this.error);
+					}
 					// reset battery warning, battery level should be above 20%
-					}else if(this.getCapabilityValue("alarm_battery") === true) {
+					if(this.hasCapability("alarm_battery") && this.getCapabilityValue("alarm_battery") == true && (blind._accessory.deviceInfo.battery > 20)) {
 						this.setCapabilityValue("alarm_battery", false)
 						.catch(this.error);
 					}
@@ -90,12 +91,13 @@ class MyDevice extends Homey.Device {
 			//todo: add other button interaction from the app
 			//const apiMethods = ["open", "close", "setPosition"];
 			if (key === "windowcoverings_set") {
-				this.log(`Blind windowcoverings_set ${parseFloat(value*100)}`);
+				//this.log(`Blind windowcoverings_set ${parseFloat(value*100)}`);
 				commands["position"] = parseFloat(value*100);
 			}else if(key === "onoff"){
 				// 0 = open
 				// 100 = closed
-				commands["position"] = (valueObj ? 0 : 100); // percentage
+				//this.log(`onoff: ${util.inspect(valueObj)}`);
+				commands["position"] = (value ? 0 : 100); // percentage
 			}else
 			{
 				this.log(`the following value is not implemented: ${util.inspect(valueObj)}`);
