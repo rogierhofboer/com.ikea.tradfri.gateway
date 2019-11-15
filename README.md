@@ -17,6 +17,8 @@ Thanks to Espen Ljosland for adding group support
 
 Thanks to Sven ten Raa for adding wall socket support
 
+Thanks to lvhv91 for adding blinds support
+
 ## TODO 
 - Fix issue where lights cannot be turned off anymore via Homey
 - Support renaming of devices (so Tradfri Gateway device names and Homey device names stay in sync)
