@@ -61,7 +61,7 @@
 			});
 
 			discoverElement.addEventListener('click', function (e) {
-				Homey.api('POST', '/discover', null, function (err, result) {
+				Homey.api('POST', '/discover', {}, function (err, result) {
 					if (err) return Homey.alert(err);
 					nameElement.value = result.addresses[0];
 				});
@@ -93,7 +93,7 @@
 
 				Homey.alert("Settings saved");
 
-				Homey.api('POST', '/connect', null, function (err, result) {
+				Homey.api('POST', '/connect', {}, function (err, result) {
 					if (err) return Homey.alert(err);
 				});
 				
