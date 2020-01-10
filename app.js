@@ -63,7 +63,7 @@ class IkeaTradfriGatewayApp extends Homey.App {
                 offlinePingCountUntilReconnect: 3,
                 // maximumReconnects: 3, // default is infinite
                 connectionInterval: 10000,
-                maximumConnectionAttempts: 1, //default is infinite
+                // maximumConnectionAttempts: 1, //default is infinite
                 failedConnectionBackoffFactor: 1.5
             }
         });
