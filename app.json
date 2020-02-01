@@ -38,7 +38,11 @@
       {
         "name": "Anders Jansson",
         "email": "anders@evx.se"
-      }
+      },
+      {
+        "name": "Johan Bendz",
+        "email": "johan_bendz@hotmail.com"
+      },	    
     ]
   },
   "permissions": [],
@@ -51,7 +55,8 @@
       "id": "light",
       "name": {
         "en": "Light",
-        "no": "Lys"
+        "no": "Lys",
+    	"sv": "Belysning"
       },
       "class": "light",
       "capabilities": [
@@ -83,7 +88,8 @@
       "id": "group",
       "name": {
         "en": "Group",
-        "no": "Gruppe"
+        "no": "Gruppe",
+    	"sv": "Grupp"
       },
       "class": "light",
       "capabilities": [
@@ -113,11 +119,13 @@
           "type": "checkbox",
           "label": {
             "en": "Force set dim value individually for each light",
-            "no": "Krev at dimmenivå settes individuelt for hvert lys"
+            "no": "Krev at dimmenivå settes individuelt for hvert lys",
+	        "sv": "Tvinga separat inställning av dim-nivå per belysning"
           },
           "hint": {
             "en": "Enable this if you experience issues where not all lights in group are dimmed to requested value.",
-            "no": "Aktivert hvis du har problemer med at ikke alle lysene blir dimmet til satt verdi."
+            "no": "Aktivert hvis du har problemer med at ikke alle lysene blir dimmet til satt verdi.",
+	        "sv": "Aktivera denna om du upplever att inte all belysning i en grupp sätts till angiven nivå"
           },
           "value": false
         }
@@ -127,7 +135,8 @@
       "id": "plug",
       "name": {
         "en": "Plug",
-        "no": "Veggplugg"
+        "no": "Veggplugg",
+    	"sv": "Vägguttag"
       },
       "class": "socket",
       "capabilities": [
@@ -158,7 +167,8 @@
         "en": "Roller Blind",
         "no": "Rullegardin",
         "nl": "Rolgordijn",
-        "de": "Rollo"
+        "de": "Rollo",
+    	"sv": "Rullgardin"
       },
       "class": "blinds",
       "capabilities": [
@@ -195,7 +205,8 @@
         "id": "setScene",
         "title": {
           "en": "Set a mood",
-          "no": "Sett en stemning"
+          "no": "Sett en stemning",
+    	  "sv": "Skapa en stämning"
         },
         "args": [
           {
