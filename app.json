@@ -8,7 +8,7 @@
     "en": "IKEA Trådfri Gateway"
   },
   "category": "lights",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "compatibility": ">=1.5.3",
   "author": {
     "name": "Rogier Hofboer",
@@ -30,7 +30,15 @@
       },
       {
         "name": "lvhv91"
-	  }
+      },
+      {
+        "name": "Vegard Fladby 'Allram'",
+        "email": "vegard.fladby@gmail.com"
+      },
+      {
+        "name": "Anders Jansson",
+        "email": "anders@evx.se"
+      }
     ]
   },
   "permissions": [],
@@ -42,7 +50,8 @@
     {
       "id": "light",
       "name": {
-        "en": "Light"
+        "en": "Light",
+        "no": "Lys"
       },
       "class": "light",
       "capabilities": [
@@ -73,7 +82,8 @@
     {
       "id": "group",
       "name": {
-        "en": "Group"
+        "en": "Group",
+        "no": "Gruppe"
       },
       "class": "light",
       "capabilities": [
@@ -102,10 +112,12 @@
           "id": "force_individual_dim",
           "type": "checkbox",
           "label": {
-            "en": "Force set dim value individually for each light"
+            "en": "Force set dim value individually for each light",
+            "no": "Krev at dimmenivå settes individuelt for hvert lys"
           },
           "hint": {
-            "en": "Enable this if you experience issues where not all lights in group are dimmed to requested value."
+            "en": "Enable this if you experience issues where not all lights in group are dimmed to requested value.",
+            "no": "Aktivert hvis du har problemer med at ikke alle lysene blir dimmet til satt verdi."
           },
           "value": false
         }
@@ -114,7 +126,8 @@
     {
       "id": "plug",
       "name": {
-        "en": "Plug"
+        "en": "Plug",
+        "no": "Veggplugg"
       },
       "class": "socket",
       "capabilities": [
@@ -143,6 +156,7 @@
       "id": "blinds",
       "name": {
         "en": "Roller Blind",
+        "no": "Rullegardin",
         "nl": "Rolgordijn",
         "de": "Rollo"
       },
@@ -180,7 +194,8 @@
       {
         "id": "setScene",
         "title": {
-          "en": "Set a mood"
+          "en": "Set a mood",
+          "no": "Sett en stemning"
         },
         "args": [
           {
