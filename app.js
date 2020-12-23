@@ -1,15 +1,15 @@
 'use strict';
 
-const   Homey                   = require('homey'),
-        node_tradfri_client     = require("node-tradfri-client");
+const Homey = require('homey'),
+    node_tradfri_client = require("node-tradfri-client");
 
 const lightDriverName = "light";
 const groupDriverName = "group";
-const plugDriverName  = "plug";
-const BlindDriverName  = "blinds";
+const plugDriverName = "plug";
+const BlindDriverName = "blinds";
 
 class IkeaTradfriGatewayApp extends Homey.App {
-    
+
     onInit() {
         this._gatewayConnected = false;
         this._homeyPlugDriver = Homey.ManagerDrivers.getDriver(plugDriverName);
@@ -21,6 +21,7 @@ class IkeaTradfriGatewayApp extends Homey.App {
         this._lights = {};
         this._groups = {};
         this._groupScenes = {};
+        this._gatewayScenes = {};
 
         (async (args, callback) => {
             try {
@@ -32,15 +33,21 @@ class IkeaTradfriGatewayApp extends Homey.App {
 
         new Homey.FlowCardAction('setScene')
             .register()
-            .registerRunListener( this._onFlowActionSetScene.bind(this) )
+            .registerRunListener(this._onFlowActionSetScene.bind(this))
             .getArgument('scene')
-            .registerAutocompleteListener( this._onSceneAutoComplete.bind(this) );
+            .registerAutocompleteListener(this._onSceneAutoComplete.bind(this));
+
+        new Homey.FlowCardAction('setGatewayScene')
+            .register()
+            .registerRunListener(this._onFlowActionSetGatewayScene.bind(this))
+            .getArgument('gatewayScene')
+            .registerAutocompleteListener(this._onGatewaySceneAutoComplete.bind(this));
 
         this.log(`Tradfri Gateway App has been initialized`);
     }
 
     async discover() {
-            return node_tradfri_client.discoverGateway();
+        return node_tradfri_client.discoverGateway();
     }
 
     async authenticate(name, securityCode) {
@@ -48,8 +55,7 @@ class IkeaTradfriGatewayApp extends Homey.App {
         return client.authenticate(securityCode);
     }
 
-    async connect()
-    {
+    async connect() {
         this._gatewayConnected = false;
         if (this._tradfri != null) {
             this._tradfri.destroy();
@@ -139,7 +145,7 @@ class IkeaTradfriGatewayApp extends Homey.App {
     }
 
     operateBlind(tradfriInstanceId, commands) {
-        this.log('operateBlind: Sending command',commands);
+        this.log('operateBlind: Sending command', commands);
         let acc = this._blinds[tradfriInstanceId];
         if (typeof acc !== "undefined")
             return this._tradfri.operateBlind(acc, commands);
@@ -227,26 +233,46 @@ class IkeaTradfriGatewayApp extends Homey.App {
 
     _sceneUpdated(groupId, scene) {
         this.log(`Scene ${scene.name} updated`);
-        if(!this._groupScenes[groupId])
-            this._groupScenes[groupId] = {};
+        if (!this._groupScenes[groupId]) this._groupScenes[groupId] = {};
+        if (!this._gatewayScenes[groupId]) this._gatewayScenes[groupId] = {};
         this._groupScenes[groupId][scene.instanceId] = scene;
+        this._gatewayScenes[groupId][scene.instanceId] = scene;
     }
 
     _sceneRemoved(groupId, instanceId) {
         this.log(`Scene ${instanceId} removed`);
-        if(this._groupScenes[groupId])
+        if (this._groupScenes[groupId])
             delete this._groupScenes[groupId][instanceId];
+        if (this._gatewayScenes[groupId])
+            delete this._gatewayScenes[groupId][instanceId];
     }
 
-    _onFlowActionSetScene( args ) {
-        return this.operateGroup(args.group._tradfriInstanceId, { transitionTime:1, onOff:true, sceneId:args.scene.instanceId });
+    _onFlowActionSetScene(args) {
+        return this.operateGroup(args.group._tradfriInstanceId, { transitionTime: 1, onOff: true, sceneId: args.scene.instanceId });
     }
 
-    _onSceneAutoComplete( query, args ) {
+    _onFlowActionSetGatewayScene(args) {
+        return this.operateGroup(args.gatewayScene.groupId, { transitionTime: 1, onOff: true, sceneId: args.gatewayScene.instanceId });
+    }
+
+    _onSceneAutoComplete(query, args) {
         const scenes = this.getScenes(args.group._tradfriInstanceId);
-        return Object.values(scenes).map(s => {
-            return {instanceId: s.instanceId, name:s.name}
+        if (scenes) {
+            return Object.values(scenes).map(s => {
+                return { instanceId: s.instanceId, name: s.name }
+            });
+        }
+        return [];
+    }
+
+    _onGatewaySceneAutoComplete(query, args) {
+        const scenes = [];
+        Object.keys(this._gatewayScenes).forEach((groupId) => {
+            Object.values(this._gatewayScenes[groupId]).forEach(s => {
+                scenes.push({ instanceId: s.instanceId, name: s.name, groupId: groupId });
+            })
         });
+        return scenes;
     }
 }
 module.exports = IkeaTradfriGatewayApp;
