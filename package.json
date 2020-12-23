@@ -5,8 +5,7 @@
   "main": "app.js",
   "dependencies": {
     "lodash.debounce": "^4.0.8",
-    "node-aead-crypto": "^2.1.4",
-    "node-tradfri-client": "^2.0.1"
+    "node-tradfri-client": "^2.1.8"
   },
   "scripts": {
     "run": "homeyConfig compose && athom project --run",

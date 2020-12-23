@@ -42,6 +42,10 @@
       {
         "name": "Johan Bendz",
         "email": "johan_bendz@hotmail.com"
+      },
+      {
+        "name": "Kjetil Haugland",
+        "email": "hauglandkjetil@gmail.com"
       }
     ]
   },
@@ -206,7 +210,7 @@
         "title": {
           "en": "Set a mood",
           "no": "Sett en stemning",
-    	  "sv": "Skapa en stämning"
+    	    "sv": "Skapa en stämning"
         },
         "args": [
           {
@@ -216,6 +220,20 @@
           },
           {
             "name": "scene",
+            "type": "autocomplete"
+          }
+        ]
+      },
+      {
+        "id": "setGatewayScene",
+        "title": {
+          "en": "Set a scene",
+          "no": "Sett en scene",
+          "sv": "Sätta en scen"
+        },
+        "args": [
+          {
+            "name": "gatewayScene",
             "type": "autocomplete"
           }
         ]
