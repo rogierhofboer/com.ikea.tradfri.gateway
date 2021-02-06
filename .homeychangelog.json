@@ -1,5 +1,8 @@
 {
   "0.1.0": {
     "en": "Added blinds. Updated to latest node-tradfri-client."
+  },
+  "0.1.3": {
+    "en": "Added scene support. Updated dependencies."
   }
 }
