@@ -4,5 +4,8 @@
   },
   "0.1.3": {
     "en": "Added scene support. Updated dependencies."
+  },
+  "0.1.4": {
+    "en": "Minimal required Homey version changed to v4.2.0"
   }
 }
