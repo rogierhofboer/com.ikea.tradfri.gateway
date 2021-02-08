@@ -2,6 +2,16 @@
 
 Homey App for the IKEA Tradfri Gateway
 
+
+When running from source, first issue an:
+
+```
+npm install
+```
+
+to retrieve all dependent modules.
+
+
 First setup the gateway in the App settings page.
 
 To build the native packages for ARM Linux run (on a clean install):
