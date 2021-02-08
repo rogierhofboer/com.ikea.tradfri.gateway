@@ -5,9 +5,7 @@ Homey App for the IKEA Tradfri Gateway
 
 When running from source, first issue an:
 
-```
-npm install
-```
+`npm install`
 
 to retrieve all dependent modules.
 
