@@ -3,7 +3,7 @@
 Homey App for the IKEA Tradfri Gateway
 
 
-*Important:* When running from source, first issue an:
+**Important:** When running from source, first issue an:
 
 `npm install`
 
