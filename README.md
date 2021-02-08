@@ -5,15 +5,11 @@ Homey App for the IKEA Tradfri Gateway
 
 **Important:** When running from source, first issue an:
 
-`npm install`
+`npm install --target_arch=arm --target_platform=linux`
 
-to retrieve all dependent modules.
+to retrieve all dependent modules and build them for ARM linux if needed.
 
 
-First setup the gateway in the App settings page.
-
-To build the native packages for ARM Linux run (on a clean install):
-npm i --target_arch=arm --target_platform=linux
 
 Thanks to AlCalzone for creating node-tradfri-client 
 https://github.com/AlCalzone/node-tradfri-client
@@ -27,17 +23,24 @@ Thanks to Sven ten Raa for adding wall socket support
 
 Thanks to lvhv91 for adding blinds support
 
+Thanks to Vegard Fladby for adding Norwegian translations
+
+Thanks to Anders Jansson for fixing a restart / reconnect bug
+
+Thanks to Johan Bendz for adding Swedish translations
+
 Thanks to Kjetil Haugland for adding the new scene support
 
+
+
 ## TODO 
-- Fix issue where lights cannot be turned off anymore via Homey
 - Support renaming of devices (so Tradfri Gateway device names and Homey device names stay in sync)
 - Translation of texts (at least EN and NL)
 
 ## License
 The MIT License (MIT)
 
-Copyright 2018 Rogier Hofboer
+Copyright 2018-2021 Rogier Hofboer
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

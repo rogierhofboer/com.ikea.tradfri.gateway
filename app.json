@@ -5,11 +5,11 @@
     "en": "IKEA Trådfri Gateway"
   },
   "description": {
-    "en": "IKEA Trådfri Gateway"
+    "en": "Control your IKEA Trådfri Gateway with Homey."
   },
   "category": "lights",
-  "version": "0.1.3",
-  "compatibility": ">=1.5.3",
+  "version": "0.1.4",
+  "compatibility": ">=4.2.0",
   "author": {
     "name": "Rogier Hofboer",
     "email": "rogier@hofboer.nl"
@@ -29,7 +29,7 @@
         "email": "sventenraa@gmail.com"
       },
       {
-        "name": "lvhv91"
+        "name": "Leonard 'lvhv91'"
       },
       {
         "name": "Vegard Fladby 'Allram'",
