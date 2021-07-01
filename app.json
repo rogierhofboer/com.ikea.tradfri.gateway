@@ -8,7 +8,7 @@
     "en": "Control your IKEA Trådfri Gateway with Homey."
   },
   "category": "lights",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "compatibility": ">=4.2.0",
   "author": {
     "name": "Rogier Hofboer",

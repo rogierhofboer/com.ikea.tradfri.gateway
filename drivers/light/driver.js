@@ -19,7 +19,7 @@ class MyDriver extends Homey.Driver {
 	onPairListDevices(data, callback) {
 		let devices = [];
 		if (!Homey.app.isGatewayConnected()) {
-			callback(new Error("Please configure the gateway first."));
+			callback(new Error("First go to Settings -> Apps -> IKEA Tradfri Gateway to configure."));
 		}
 		else
 		{

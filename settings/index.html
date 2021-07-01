@@ -5,33 +5,45 @@
 </head>
 <body>
   <h1>IKEA Tradfri Settings</h1>
+    <p>Make sure Hostname, Identity and PSK are present, then press Save</p>
 	<fieldset>
 		<legend>Gateway Settings</legend>
-		<div class="field row">
-			<button id="discover" class="left">Discover</button>
+        <h2>Press Discover to find your Tradfri Gateway or enter the hostname or IP address directly.</h2>
+        <div class="field row">
+			<button id="discover" class="left">Discover</button><br/><br/>
 		</div>
-		<div class="field row">
+		<p></p>
+        <div class="field row">
 				<label for="name">Hostname</label>
 				<input id="name" type="text" value="" />
 		</div>
+        <h2>First enter the security code on the back of the gateway.
+        Then press Authenticate. This will generate an Identity and PSK.</h2>
+        <p></p>
 		<div class="field row">
 			<label for="name">Security code</label>
-			<input id="secret" type="text" value="" /> Not stored
+			<input id="secret" type="text" value="" /> Not stored<br/>
 		</div>
+        <p></p>
 		<div class="field row">
-			<button id="authenticate" class="left">Authenticate</button>
+			<button id="authenticate" class="left">Authenticate</button><br/><br/>
 		</div>
-		
+        <p></p>
 		<div class="field row">
 				<label for="identity">Identity</label>
 				<input id="identity" type="text" value="" />
 		</div>
+        <br/>
 		<div class="field row">
 				<label for="psk">PSK</label>
 				<input id="psk" type="text" value="" />
 		</div>
+        <p></p>
+        <h2>Press Save to store the Hostname, Identity and PSK on your Homey.</h2>
+        <p></p>
+        <button id="save" class="left">Save</button>
 	</fieldset>
-	<button id="save" class="left">Save</button>
+    
 	
 	<script type="text/javascript">
 

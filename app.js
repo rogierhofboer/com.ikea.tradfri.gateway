@@ -136,7 +136,7 @@ class IkeaTradfriGatewayApp extends Homey.App {
     }
 
     operatePlug(tradfriInstanceId, commands) {
-        //this.log('operatePlug: Sending command',commands);
+        this.log('operatePlug: Sending command',commands);
         let acc = this._plugs[tradfriInstanceId];
         if (typeof acc !== "undefined")
             return this._tradfri.operatePlug(acc, commands);
@@ -154,7 +154,7 @@ class IkeaTradfriGatewayApp extends Homey.App {
     }
 
     operateLight(tradfriInstanceId, commands) {
-        //this.log('operateLight: Sending command',commands);
+        this.log('operateLight: Sending command',commands);
         let acc = this._lights[tradfriInstanceId];
         if (typeof acc !== "undefined")
             return this._tradfri.operateLight(acc, commands);
@@ -163,7 +163,7 @@ class IkeaTradfriGatewayApp extends Homey.App {
     }
 
     operateGroup(tradfriInstanceId, commands) {
-        //this.log('operateGroup: Sending command',commands);
+        this.log('operateGroup: Sending command',commands);
         let group = this._groups[tradfriInstanceId];
 
         if (typeof group !== "undefined")
