@@ -47,9 +47,9 @@ class MyDevice extends Homey.Device {
         	return;
 
         let dimValues = [];
-        const group = Homey.app.getGroup(this._tradfriInstanceId);
+        const group = this.homey.app.getGroup(this._tradfriInstanceId);
         group.deviceIDs.forEach(deviceId => {
-            const light = Homey.app.getLight(deviceId);
+            const light = this.homey.app.getLight(deviceId);
             if(light && light.lightList)
 			{
 				const device = light.lightList[0];
@@ -94,11 +94,11 @@ class MyDevice extends Homey.Device {
 
             if (this.getSetting('force_individual_dim')) {
                 this.log('Updating dim individually to', commands["dimmer"]);
-                const group = Homey.app.getGroup(this._tradfriInstanceId);
+                const group = this.homey.app.getGroup(this._tradfriInstanceId);
                 if (group && group.deviceIDs) {
                     group.deviceIDs.forEach(deviceId => {
-                        if (Homey.app.getLight(deviceId))
-                            Homey.app.operateLight(deviceId, commands)
+                        if (this.homey.app.getLight(deviceId))
+                            this.homey.app.operateLight(deviceId, commands)
                     });
                     return Promise.resolve();
                 }
@@ -108,7 +108,7 @@ class MyDevice extends Homey.Device {
         this._dimSetByCode = true;
         this._resetSetByCodeDebounce();
 
-		return Homey.app.operateGroup(this._tradfriInstanceId, commands)
+		return this.homey.app.operateGroup(this._tradfriInstanceId, commands)
 	}
 }
 

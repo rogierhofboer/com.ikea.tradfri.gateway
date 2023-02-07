@@ -8,7 +8,7 @@ class MyDevice extends Homey.Device {
 	
 	onInit() {
 		this._tradfriInstanceId = this.getData().id;
-		let tradfriDevice = Homey.app.getPlug(this._tradfriInstanceId);
+		let tradfriDevice = this.homey.app.getPlug(this._tradfriInstanceId);
 		this.updateCapabilities(tradfriDevice);
 		this.registerMultipleCapabilityListener(this.getCapabilities(), this._onMultipleCapabilityListener.bind(this), CAPABILITIES_SET_DEBOUNCE);
 		this.log(`Tradfri Plug ${this.getName()} has been initialized`);
@@ -42,7 +42,7 @@ class MyDevice extends Homey.Device {
 				commands["onOff"] = value;
 			}
 		}
-		return Homey.app.operatePlug(this._tradfriInstanceId, commands)
+		return this.homey.app.operatePlug(this._tradfriInstanceId, commands)
 	}
 
 }

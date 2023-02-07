@@ -12,10 +12,10 @@ class IkeaTradfriGatewayApp extends Homey.App {
 
     onInit() {
         this._gatewayConnected = false;
-        this._homeyPlugDriver = Homey.ManagerDrivers.getDriver(plugDriverName);
-        this._homeyBlindDriver = Homey.ManagerDrivers.getDriver(BlindDriverName);
-        this._homeyLightDriver = Homey.ManagerDrivers.getDriver(lightDriverName);
-        this._homeyGroupDriver = Homey.ManagerDrivers.getDriver(groupDriverName);
+        // this._homeyPlugDriver = this.homey.drivers.getDriver(plugDriverName);
+        // this._homeyBlindDriver = this.homey.drivers.getDriver(BlindDriverName);
+        // this._homeyLightDriver = this.homey.drivers.getDriver(lightDriverName);
+        // this._homeyGroupDriver = this.homey.drivers.getDriver(groupDriverName);
         this._plugs = {};
         this._blinds = {};
         this._lights = {};
@@ -31,14 +31,12 @@ class IkeaTradfriGatewayApp extends Homey.App {
             }
         })();
 
-        new Homey.FlowCardAction('setScene')
-            .register()
+        this.homey.flow.getActionCard('setScene')
             .registerRunListener(this._onFlowActionSetScene.bind(this))
             .getArgument('scene')
             .registerAutocompleteListener(this._onSceneAutoComplete.bind(this));
 
-        new Homey.FlowCardAction('setGatewayScene')
-            .register()
+        this.homey.flow.getActionCard('setGatewayScene')
             .registerRunListener(this._onFlowActionSetGatewayScene.bind(this))
             .getArgument('gatewayScene')
             .registerAutocompleteListener(this._onGatewaySceneAutoComplete.bind(this));
@@ -60,7 +58,7 @@ class IkeaTradfriGatewayApp extends Homey.App {
         if (this._tradfri != null) {
             this._tradfri.destroy();
         }
-        this._tradfri = new node_tradfri_client.TradfriClient(Homey.ManagerSettings.get('name'), {
+        this._tradfri = new node_tradfri_client.TradfriClient(this.homey.settings.get('name'), {
             watchConnection: {
                 pingInterval: 10000,
                 failedPingCountUntilOffline: 1,
@@ -88,7 +86,7 @@ class IkeaTradfriGatewayApp extends Homey.App {
             .on("group removed", this._groupRemoved.bind(this))
             .on("scene updated", this._sceneUpdated.bind(this))
             .on("scene removed", this._sceneRemoved.bind(this));
-        await this._tradfri.connect(Homey.ManagerSettings.get('identity'), Homey.ManagerSettings.get('psk'));
+        await this._tradfri.connect(this.homey.settings.get('identity'), this.homey.settings.get('psk'));
         this._gatewayConnected = true;
         this._tradfri.observeDevices();
         this._tradfri.observeGroupsAndScenes();
@@ -176,25 +174,25 @@ class IkeaTradfriGatewayApp extends Homey.App {
         if (acc.type === node_tradfri_client.AccessoryTypes.lightbulb) {
             this.log(`${acc.name} updated`);
             this._lights[acc.instanceId] = acc;
-            this._homeyLightDriver.updateCapabilities(acc);
+            this.homey.drivers.getDriver(lightDriverName).updateCapabilities(acc);
 
             //Update dim values on group if lights are updated individually or through scene
             for (const [groupInstanceId, group] of Object.entries(this._groups)) {
                 if (group.deviceIDs && group.deviceIDs.indexOf(acc.instanceId) > -1)
-                    this._homeyGroupDriver.deviceInGroupUpdated(group);
+                    this.homey.drivers.getDriver(groupDriverName).deviceInGroupUpdated(group);
             }
         }
         if (acc.type === node_tradfri_client.AccessoryTypes.plug) {
             this.log(`${acc.name} updated`);
             this._plugs[acc.instanceId] = acc;
-            this._homeyPlugDriver.updateCapabilities(acc);
+            this.homey.drivers.getDriver(plugDriverName).updateCapabilities(acc);
         }
 
         if (acc.type === node_tradfri_client.AccessoryTypes.blind) {
             //this.log('_deviceUpdated name and type: ',acc);
             this.log(`${acc.name} updated`);
             this._blinds[acc.instanceId] = acc;
-            this._homeyBlindDriver.updateCapabilities(acc);
+            this.homey.drivers.getDriver(BlindDriverName).updateCapabilities(acc);
         }
 
         if (acc.type === node_tradfri_client.AccessoryTypes.signalRepeater) {
@@ -223,7 +221,7 @@ class IkeaTradfriGatewayApp extends Homey.App {
     _groupUpdated(group) {
         this.log(`Group ${group.name} updated`);
         this._groups[group.instanceId] = group;
-        this._homeyGroupDriver.updateCapabilities(group);
+        this.homey.drivers.getDriver(groupDriverName).updateCapabilities(group);
     }
 
     _groupRemoved(instanceId) {
