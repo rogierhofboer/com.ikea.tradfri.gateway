@@ -11,19 +11,20 @@ class MyDriver extends Homey.Driver {
 	
 	updateCapabilities(tradfriDevice) 
 	{
-		let homeyDevice = this.getDevice({id: tradfriDevice.instanceId});
-		if (homeyDevice instanceof Error) return; 
-		homeyDevice.updateCapabilities(tradfriDevice);
+		for(const device of this.getDevices()) {
+			if (device.getData().id === tradfriDevice.instanceId)
+				device.updateCapabilities(tradfriDevice);
+		}
 	}
 	
-	onPairListDevices(data, callback) {
+	async onPairListDevices() {
 		let devices = [];
-		if (!Homey.app.isGatewayConnected()) {
-			callback(new Error("First go to Settings -> Apps -> IKEA Tradfri Gateway to configure."));
+		if (!this.homey.app.isGatewayConnected()) {
+			throw new Error("First go to Settings -> Apps -> IKEA Tradfri Gateway to configure.");
 		}
 		else
 		{
-			let lights = Homey.app.getLights();
+			let lights = this.homey.app.getLights();
 			for (const device of Object.values(lights)) {
 				let light = device.lightList[0];
 				let capabilities = [];
@@ -50,7 +51,7 @@ class MyDriver extends Homey.Driver {
 					name: device.name,
 				});
 			}	
-			callback(null, devices.sort(MyDriver._compareHomeyDevice));
+			return devices.sort(MyDriver._compareHomeyDevice);
 		}
 	}
 

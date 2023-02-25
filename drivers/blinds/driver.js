@@ -9,21 +9,21 @@ class MyDriver extends Homey.Driver {
 		this.log('Tradfri Plug Driver has been initialized');
 	}
 	
-	updateCapabilities(tradfriDevice) 
-	{
-		let homeyDevice = this.getDevice({id: tradfriDevice.instanceId});
-		if (homeyDevice instanceof Error) return; 
-		homeyDevice.updateCapabilities(tradfriDevice);
+	updateCapabilities(tradfriDevice) {
+		for(const device of this.getDevices()) {
+			if (device.getData().id === tradfriDevice.instanceId)
+				device.updateCapabilities(tradfriDevice);
+		}
 	}
 	
-	onPairListDevices(data, callback) {
+	async onPairListDevices() {
 		let devices = [];
-		if (!Homey.app.isGatewayConnected()) {
-			callback(new Error("First go to Settings -> Apps -> IKEA Tradfri Gateway to configure."));
+		if (!this.homey.app.isGatewayConnected()) {
+			throw new Error("First go to Settings -> Apps -> IKEA Tradfri Gateway to configure.");
 		}
 		else
 		{
-			let blinds = Homey.app.getBlinds();
+			let blinds = this.homey.app.getBlinds();
 			for (const device of Object.values(blinds)) {
 				let capabilities = [];
 				//Todo: Fetch capabilities from the app.json file
@@ -39,7 +39,7 @@ class MyDriver extends Homey.Driver {
 					name: device.name,
 				});
 			}	
-			callback(null, devices.sort(MyDriver._compareHomeyDevice));
+			return devices.sort(MyDriver._compareHomeyDevice);
 		}
 	}
 

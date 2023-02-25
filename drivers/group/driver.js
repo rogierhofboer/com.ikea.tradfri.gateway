@@ -10,25 +10,27 @@ class MyDriver extends Homey.Driver {
 	
 	updateCapabilities(tradfriGroup)
 	{
-		let homeyDevice = this.getDevice({id: tradfriGroup.instanceId});
-		if (homeyDevice instanceof Error) return; 
-		homeyDevice.updateCapabilities(tradfriGroup);
+		for(const device of this.getDevices()) {
+			if (device.getData().id === tradfriGroup.instanceId)
+				device.updateCapabilities(tradfriGroup);
+		}
 	}
 
     deviceInGroupUpdated(tradfriGroup) {
-        let homeyDevice = this.getDevice({id: tradfriGroup.instanceId});
-        if (homeyDevice instanceof Error) return;
-        homeyDevice.deviceInGroupUpdated(tradfriGroup);
+		for(const device of this.getDevices()) {
+			if (device.getData().id === tradfriGroup.instanceId)
+				device.deviceInGroupUpdated(tradfriGroup);
+		}
 	}
 	
-	onPairListDevices(data, callback) {
+	async onPairListDevices() {
 		let devices = [];
-		if (!Homey.app.isGatewayConnected()) {
-			callback(new Error("First go to Settings -> Apps -> IKEA Tradfri Gateway to configure."));
+		if (!this.homey.app.isGatewayConnected()) {
+			throw new Error("First go to Settings -> Apps -> IKEA Tradfri Gateway to configure.");
 		}
 		else
 		{
-			let groups = Homey.app.getGroups();
+			let groups = this.homey.app.getGroups();
 			for (const group of Object.values(groups)) {
 				let capabilities = [];
 					capabilities.push("onoff");
@@ -42,7 +44,7 @@ class MyDriver extends Homey.Driver {
 					name: group.name,
 				});
 			}	
-			callback(null, devices.sort(MyDriver._compareHomeyDevice));
+			return devices.sort(MyDriver._compareHomeyDevice);
 		}
 	}
 

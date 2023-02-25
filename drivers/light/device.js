@@ -8,7 +8,7 @@ class MyDevice extends Homey.Device {
 	
 	onInit() {
 		this._tradfriInstanceId = this.getData().id;
-		let tradfriDevice = Homey.app.getLight(this._tradfriInstanceId);
+		let tradfriDevice = this.homey.app.getLight(this._tradfriInstanceId);
 		this.updateCapabilities(tradfriDevice);
 		this.registerMultipleCapabilityListener(this.getCapabilities(), this._onMultipleCapabilityListener.bind(this), CAPABILITIES_SET_DEBOUNCE);
 		this.log(`Tradfri Light ${this.getName()} has been initialized`);
@@ -75,7 +75,7 @@ class MyDevice extends Homey.Device {
 				commands["saturation"] = value * 100;
 			}
 		}
-		return Homey.app.operateLight(this._tradfriInstanceId, commands)
+		return this.homey.app.operateLight(this._tradfriInstanceId, commands)
 	}
 
 }

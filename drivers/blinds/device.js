@@ -9,7 +9,7 @@ class MyDevice extends Homey.Device {
 	
 	onInit() {
 		this._tradfriInstanceId = this.getData().id;
-		let tradfriDevice = Homey.app.getBlind(this._tradfriInstanceId);
+		let tradfriDevice = this.homey.app.getBlind(this._tradfriInstanceId);
 		this.updateCapabilities(tradfriDevice);
 		//this.log('blinds this.getCapabilities()',this.getCapabilities());
 		this.registerMultipleCapabilityListener(this.getCapabilities(), this._onMultipleCapabilityListener.bind(this), CAPABILITIES_SET_DEBOUNCE);
@@ -103,7 +103,7 @@ class MyDevice extends Homey.Device {
 				this.log(`the following value is not implemented: ${util.inspect(valueObj)}`);
 			}
 		}
-		return Homey.app.operateBlind(this._tradfriInstanceId, commands)
+		return this.homey.app.operateBlind(this._tradfriInstanceId, commands)
 	}
 
 }

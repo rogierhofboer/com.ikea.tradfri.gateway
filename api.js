@@ -6,7 +6,7 @@ module.exports = [
         path: '/discover/',
         fn: async (args, callback) => {
             try {
-                let result = await Homey.app.discover();
+                let result = await this.homey.app.discover();
                 return callback(null, result);
             } catch (err) {
                 return callback(err);
@@ -18,7 +18,7 @@ module.exports = [
         path: '/authenticate/',
         fn: async (args, callback) => {
             try {
-                let result = await Homey.app.authenticate(args.body.name, args.body.secret);
+                let result = await this.homey.app.authenticate(args.body.name, args.body.secret);
                 return callback(null,result);
             } catch (err) {
                 return callback(err);
@@ -30,7 +30,7 @@ module.exports = [
         path: '/connect/',
         fn: async (args, callback) => {
             try {
-                let result = await Homey.app.connect();
+                let result = await this.homey.app.connect();
                 return callback(null, result);
             } catch (err) {
                 return callback(err);

@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/rogierhofboer/com.ikea.tradfri.gateway/issues"
   },
-  "homepage": "https://github.com/rogierhofboer/com.ikea.tradfri.gateway#readme"
+  "homepage": "https://github.com/rogierhofboer/com.ikea.tradfri.gateway#readme",
+  "devDependencies": {
+    "homey": "^2.33.0"
+  }
 }
