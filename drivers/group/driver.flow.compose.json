@@ -1,0 +1,23 @@
+{
+  "actions": [
+    {
+      "id": "setScene",
+      "title": {
+        "en": "Set a mood",
+        "no": "Sett en stemning",
+        "sv": "Skapa en stämning"
+      },
+      "titleFormatted": {
+        "en": "Set a mood [[scene]]",
+        "no": "Sett en stemning [[scene]]",
+        "sv": "Skapa en stämning [[scene]]"
+      },
+      "args": [
+        {
+          "name": "scene",
+          "type": "autocomplete"
+        }
+      ]
+    }
+  ]
+}

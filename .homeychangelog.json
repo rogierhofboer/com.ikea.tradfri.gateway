@@ -10,5 +10,8 @@
   },
   "0.1.5": {
     "en": "Updated node-tradfri-client to v3.0.1 and clarified settings."
+  },
+  "0.1.6": {
+    "en": "Upgraded to SDK v3 and added debouncing for Light."
   }
 }

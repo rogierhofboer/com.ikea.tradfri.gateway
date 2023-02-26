@@ -1,27 +1,27 @@
 {
   "name": "com.ikea.tradfri.gateway",
-  "version": "0.0.1",
+  "version": "0.1.6",
   "description": "This app allows you to connect the IKEA Trådfri gateway to Homey",
   "main": "app.js",
   "dependencies": {
     "lodash.debounce": "^4.0.8",
-    "node-tradfri-client": "^3.0.1"
+    "node-tradfri-client": "^3.2.0"
   },
   "scripts": {
-    "run": "homeyConfig compose && athom project --run",
+    "run": "homey app run",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rogierhofboer/com.ikea.tradfri.gateway.git"
   },
-  "author": "",
+  "author": "Rogier Hofboer",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/rogierhofboer/com.ikea.tradfri.gateway/issues"
   },
   "homepage": "https://github.com/rogierhofboer/com.ikea.tradfri.gateway#readme",
   "devDependencies": {
-    "homey": "^2.33.0"
+    "homey": "^2.33.3"
   }
 }

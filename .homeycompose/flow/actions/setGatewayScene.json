@@ -1,0 +1,19 @@
+{
+  "id": "setGatewayScene",
+  "title": {
+    "en": "Set a scene",
+    "no": "Sett en scene",
+    "sv": "Sätta en scen"
+  },
+  "titleFormatted": {
+    "en": "Set a scene [[gatewayScene]]",
+    "no": "Sett en scene [[gatewayScene]]",
+    "sv": "Sätta en scen [[gatewayScene]]"
+  },
+  "args": [
+    {
+      "name": "gatewayScene",
+      "type": "autocomplete"
+    }
+  ]
+}

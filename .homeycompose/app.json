@@ -1,0 +1,72 @@
+{
+  "id": "com.ikea.tradfri.gateway",
+  "sdk": 3,
+  "name": {
+    "en": "IKEA Trådfri Gateway"
+  },
+  "description": {
+    "en": "Control your IKEA Trådfri Gateway with Homey."
+  },
+  "category": "lights",
+  "brandColor": "#0058AB",
+  "version": "0.1.6",
+  "compatibility": ">=5.0.0",
+  "author": {
+    "name": "Rogier Hofboer",
+    "email": "rogier@hofboer.nl"
+  },
+  "contributors": {
+    "developers": [
+      {
+        "name": "Rogier Hofboer",
+        "email": "rogier@hofboer.nl"
+      },
+      {
+        "name": "Espen Ljosland",
+        "email": "espen@ljosland.com"
+      },
+      {
+        "name": "Sven ten Raa",
+        "email": "sventenraa@gmail.com"
+      },
+      {
+        "name": "Leonard 'lvhv91'"
+      },
+      {
+        "name": "Vegard Fladby 'Allram'",
+        "email": "vegard.fladby@gmail.com"
+      },
+      {
+        "name": "Anders Jansson",
+        "email": "anders@evx.se"
+      },
+      {
+        "name": "Johan Bendz",
+        "email": "johan_bendz@hotmail.com"
+      },
+      {
+        "name": "Kjetil Haugland",
+        "email": "hauglandkjetil@gmail.com"
+      }
+    ]
+  },
+  "permissions": [],
+  "images": {
+    "large": "/assets/images/large.png",
+    "small": "/assets/images/small.png"
+  },
+  "api": {
+    "discover": {
+      "method": "POST",
+      "path": "/discover"
+    },
+    "authenticate": {
+      "method": "POST",
+      "path": "/authenticate"
+    },
+    "connect": {
+      "method": "POST",
+      "path": "/connect"
+    }
+  }
+}

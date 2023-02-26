@@ -17,7 +17,7 @@ https://github.com/AlCalzone/node-tradfri-client
 Thanks to Robert Klep for answering my questions on slack and making homey-app-upload
 https://github.com/robertklep/homey-app-upload
 
-Thanks to Espen Ljosland for adding group support
+Thanks to Espen Ljosland for adding group support and migrating to SDK v3
 
 Thanks to Sven ten Raa for adding wall socket support
 
@@ -40,7 +40,7 @@ Thanks to Kjetil Haugland for adding the new scene support
 ## License
 The MIT License (MIT)
 
-Copyright 2018-2021 Rogier Hofboer
+Copyright 2018-2023 Rogier Hofboer
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

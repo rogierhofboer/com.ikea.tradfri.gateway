@@ -1,0 +1,38 @@
+{
+  "name": {
+    "en": "Roller Blind",
+    "no": "Rullegardin",
+    "nl": "Rolgordijn",
+    "de": "Rollo",
+    "sv": "Rullgardin"
+  },
+  "class": "blinds",
+  "capabilities": [
+    "onoff",
+    "windowcoverings_set",
+    "measure_battery",
+    "alarm_battery"
+  ],
+  "energy": {
+    "batteries": [
+      "INTERNAL"
+    ]
+  },
+  "pair": [
+    {
+      "id": "list_devices",
+      "template": "list_devices",
+      "navigation": {
+        "next": "add_devices"
+      }
+    },
+    {
+      "id": "add_devices",
+      "template": "add_devices"
+    }
+  ],
+  "images": {
+    "large": "/drivers/blinds/assets/images/large.png",
+    "small": "/drivers/blinds/assets/images/small.png"
+  }
+}

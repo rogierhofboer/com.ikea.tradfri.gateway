@@ -1,4 +1,5 @@
 {
+  "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "com.ikea.tradfri.gateway",
   "sdk": 3,
   "name": {
@@ -8,7 +9,8 @@
     "en": "Control your IKEA Trådfri Gateway with Homey."
   },
   "category": "lights",
-  "version": "0.1.5",
+  "brandColor": "#0058AB",
+  "version": "0.1.6",
   "compatibility": ">=5.0.0",
   "author": {
     "name": "Rogier Hofboer",
@@ -20,7 +22,7 @@
         "name": "Rogier Hofboer",
         "email": "rogier@hofboer.nl"
       },
-	  {
+      {
         "name": "Espen Ljosland",
         "email": "espen@ljosland.com"
       },
@@ -68,22 +70,74 @@
       "path": "/connect"
     }
   },
+  "flow": {
+    "actions": [
+      {
+        "id": "setGatewayScene",
+        "title": {
+          "en": "Set a scene",
+          "no": "Sett en scene",
+          "sv": "Sätta en scen"
+        },
+        "titleFormatted": {
+          "en": "Set a scene [[gatewayScene]]",
+          "no": "Sett en scene [[gatewayScene]]",
+          "sv": "Sätta en scen [[gatewayScene]]"
+        },
+        "args": [
+          {
+            "name": "gatewayScene",
+            "type": "autocomplete"
+          }
+        ]
+      },
+      {
+        "id": "setScene",
+        "title": {
+          "en": "Set a mood",
+          "no": "Sett en stemning",
+          "sv": "Skapa en stämning"
+        },
+        "titleFormatted": {
+          "en": "Set a mood [[scene]]",
+          "no": "Sett en stemning [[scene]]",
+          "sv": "Skapa en stämning [[scene]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=group"
+          },
+          {
+            "name": "scene",
+            "type": "autocomplete"
+          }
+        ]
+      }
+    ]
+  },
   "drivers": [
     {
-      "id": "light",
       "name": {
-        "en": "Light",
-        "no": "Lys",
-    	"sv": "Belysning"
+        "en": "Roller Blind",
+        "no": "Rullegardin",
+        "nl": "Rolgordijn",
+        "de": "Rollo",
+        "sv": "Rullgardin"
       },
-      "class": "light",
+      "class": "blinds",
       "capabilities": [
         "onoff",
-        "dim",
-        "light_temperature",
-        "light_hue",
-        "light_saturation"
+        "windowcoverings_set",
+        "measure_battery",
+        "alarm_battery"
       ],
+      "energy": {
+        "batteries": [
+          "INTERNAL"
+        ]
+      },
       "pair": [
         {
           "id": "list_devices",
@@ -98,16 +152,16 @@
         }
       ],
       "images": {
-        "large": "/drivers/light/assets/images/large.png",
-        "small": "/drivers/light/assets/images/small.png"
-      }
+        "large": "/drivers/blinds/assets/images/large.png",
+        "small": "/drivers/blinds/assets/images/small.png"
+      },
+      "id": "blinds"
     },
     {
-      "id": "group",
       "name": {
         "en": "Group",
         "no": "Gruppe",
-    	"sv": "Grupp"
+        "sv": "Grupp"
       },
       "class": "light",
       "capabilities": [
@@ -138,23 +192,56 @@
           "label": {
             "en": "Force set dim value individually for each light",
             "no": "Krev at dimmenivå settes individuelt for hvert lys",
-	        "sv": "Tvinga separat inställning av dim-nivå per belysning"
+            "sv": "Tvinga separat inställning av dim-nivå per belysning"
           },
           "hint": {
             "en": "Enable this if you experience issues where not all lights in group are dimmed to requested value.",
             "no": "Aktivert hvis du har problemer med at ikke alle lysene blir dimmet til satt verdi.",
-	        "sv": "Aktivera denna om du upplever att inte all belysning i en grupp sätts till angiven nivå"
+            "sv": "Aktivera denna om du upplever att inte all belysning i en grupp sätts till angiven nivå"
           },
           "value": false
         }
-      ]
+      ],
+      "id": "group"
     },
     {
-      "id": "plug",
+      "name": {
+        "en": "Light",
+        "no": "Lys",
+        "sv": "Belysning"
+      },
+      "class": "light",
+      "capabilities": [
+        "onoff",
+        "dim",
+        "light_temperature",
+        "light_hue",
+        "light_saturation"
+      ],
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "images": {
+        "large": "/drivers/light/assets/images/large.png",
+        "small": "/drivers/light/assets/images/small.png"
+      },
+      "id": "light"
+    },
+    {
       "name": {
         "en": "Plug",
         "no": "Veggplugg",
-    	"sv": "Vägguttag"
+        "sv": "Vägguttag"
       },
       "class": "socket",
       "capabilities": [
@@ -177,81 +264,8 @@
       "images": {
         "large": "/drivers/plug/assets/images/large.png",
         "small": "/drivers/plug/assets/images/small.png"
-      }
-    },
-    {
-      "id": "blinds",
-      "name": {
-        "en": "Roller Blind",
-        "no": "Rullegardin",
-        "nl": "Rolgordijn",
-        "de": "Rollo",
-    	"sv": "Rullgardin"
       },
-      "class": "blinds",
-      "capabilities": [
-        "onoff",
-        "windowcoverings_set",
-        "measure_battery",
-        "alarm_battery"
-      ],
-      "energy": {
-        "batteries": [ "INTERNAL" ]
-      },
-      "pair": [
-        {
-          "id": "list_devices",
-          "template": "list_devices",
-          "navigation": {
-            "next": "add_devices"
-          }
-        },
-        {
-          "id": "add_devices",
-          "template": "add_devices"
-        }
-      ],
-      "images": {
-        "large": "/drivers/blinds/assets/images/large.png",
-        "small": "/drivers/blinds/assets/images/small.png"
-      }
+      "id": "plug"
     }
-  ],
-  "flow": {
-    "actions": [
-      {
-        "id": "setScene",
-        "title": {
-          "en": "Set a mood",
-          "no": "Sett en stemning",
-    	    "sv": "Skapa en stämning"
-        },
-        "args": [
-          {
-            "name": "group",
-            "type": "device",
-            "filter": "driver_id=group"
-          },
-          {
-            "name": "scene",
-            "type": "autocomplete"
-          }
-        ]
-      },
-      {
-        "id": "setGatewayScene",
-        "title": {
-          "en": "Set a scene",
-          "no": "Sett en scene",
-          "sv": "Sätta en scen"
-        },
-        "args": [
-          {
-            "name": "gatewayScene",
-            "type": "autocomplete"
-          }
-        ]
-      }
-    ]
-  }
+  ]
 }

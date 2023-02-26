@@ -1,0 +1,46 @@
+{
+  "name": {
+    "en": "Group",
+    "no": "Gruppe",
+    "sv": "Grupp"
+  },
+  "class": "light",
+  "capabilities": [
+    "onoff",
+    "dim"
+  ],
+  "pair": [
+    {
+      "id": "list_devices",
+      "template": "list_devices",
+      "navigation": {
+        "next": "add_devices"
+      }
+    },
+    {
+      "id": "add_devices",
+      "template": "add_devices"
+    }
+  ],
+  "images": {
+    "large": "/drivers/light/assets/images/large.png",
+    "small": "/drivers/light/assets/images/small.png"
+  },
+  "settings": [
+    {
+      "id": "force_individual_dim",
+      "type": "checkbox",
+      "label": {
+        "en": "Force set dim value individually for each light",
+        "no": "Krev at dimmenivå settes individuelt for hvert lys",
+        "sv": "Tvinga separat inställning av dim-nivå per belysning"
+      },
+      "hint": {
+        "en": "Enable this if you experience issues where not all lights in group are dimmed to requested value.",
+        "no": "Aktivert hvis du har problemer med at ikke alle lysene blir dimmet til satt verdi.",
+        "sv": "Aktivera denna om du upplever att inte all belysning i en grupp sätts till angiven nivå"
+      },
+      "value": false
+    }
+  ]
+}
