@@ -51,6 +51,10 @@
       }
     ]
   },
+  "source": "https://github.com/rogierhofboer/com.ikea.tradfri.gateway",
+  "bugs": {
+    "url": "https://github.com/rogierhofboer/com.ikea.tradfri.gateway/issues"
+  },
   "permissions": [],
   "images": {
     "large": "/assets/images/large.png",
