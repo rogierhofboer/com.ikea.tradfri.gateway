@@ -13,5 +13,8 @@
   },
   "0.1.6": {
     "en": "Upgraded to SDK v3 and added debouncing for Light."
+  },
+  "0.1.7": {
+    "en": "Fix settings page."
   }
 }
