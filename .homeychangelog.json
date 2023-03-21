@@ -16,5 +16,8 @@
   },
   "0.1.7": {
     "en": "Fix settings page."
+  },
+  "0.1.8": {
+    "en": "Reverted node-tradfri-client to v3.0.1"
   }
 }

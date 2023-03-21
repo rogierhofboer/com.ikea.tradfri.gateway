@@ -1,11 +1,11 @@
 {
   "name": "com.ikea.tradfri.gateway",
-  "version": "0.1.6",
+  "version": "0.1.8",
   "description": "This app allows you to connect the IKEA Trådfri gateway to Homey",
   "main": "app.js",
   "dependencies": {
     "lodash.debounce": "^4.0.8",
-    "node-tradfri-client": "^3.2.0"
+    "node-tradfri-client": "3.0.1"
   },
   "scripts": {
     "run": "homey app run",
