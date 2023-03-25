@@ -22,5 +22,8 @@
   },
   "0.1.9": {
     "en": "Removed light debouncing."
+  },
+  "0.1.10": {
+    "en": "Set light transition time to 0 seconds."
   }
 }

@@ -155,6 +155,7 @@ class IkeaTradfriGatewayApp extends Homey.App {
         this.log('operateLight: Sending command',commands);
         let acc = this._lights[tradfriInstanceId];
         if (typeof acc !== "undefined")
+            commands["transitionTime"] = 0;
             return this._tradfri.operateLight(acc, commands);
 
         return Promise.reject("light not found");
