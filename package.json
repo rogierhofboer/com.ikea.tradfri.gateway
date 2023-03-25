@@ -1,6 +1,6 @@
 {
   "name": "com.ikea.tradfri.gateway",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "This app allows you to connect the IKEA Trådfri gateway to Homey",
   "main": "app.js",
   "dependencies": {

@@ -9,7 +9,7 @@
   },
   "category": "lights",
   "brandColor": "#0058AB",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "compatibility": ">=5.0.0",
   "author": {
     "name": "Rogier Hofboer",

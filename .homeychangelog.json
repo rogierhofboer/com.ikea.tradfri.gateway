@@ -19,5 +19,8 @@
   },
   "0.1.8": {
     "en": "Reverted node-tradfri-client to v3.0.1"
+  },
+  "0.1.9": {
+    "en": "Removed light debouncing."
   }
 }

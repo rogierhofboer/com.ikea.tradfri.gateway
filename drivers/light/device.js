@@ -1,13 +1,8 @@
 'use strict';
 
-const Homey    = require('homey'),
-      debounce = require('lodash.debounce');
+const Homey    = require('homey');
 
 const CAPABILITIES_SET_DEBOUNCE = 100;
-const DIM_DEBOUNCE              = 2500;
-const TEMPERATURE_DEBOUNCE      = 2500;
-const HUE_DEBOUNCE              = 2500;
-const SATURATION_DEBOUNCE       = 2500;
 
 class MyDevice extends Homey.Device {
 	
@@ -16,23 +11,6 @@ class MyDevice extends Homey.Device {
 		let tradfriDevice = this.homey.app.getLight(this._tradfriInstanceId);
 		this.updateCapabilities(tradfriDevice);
 		this.registerMultipleCapabilityListener(this.getCapabilities(), this._onMultipleCapabilityListener.bind(this), CAPABILITIES_SET_DEBOUNCE);
-        this._dim_debounce = debounce((capability, value) => { 
-            this.setCapabilityValue(capability, value)
-                .catch(this.error);
-        }, DIM_DEBOUNCE, { "maxWait": DIM_DEBOUNCE });
-        this._temp_debounce = debounce((capability, value) => { 
-            this.setCapabilityValue(capability, value)
-                .catch(this.error);
-        }, TEMPERATURE_DEBOUNCE, { "maxWait": TEMPERATURE_DEBOUNCE });
-        this._hue_debounce = debounce((capability, value) => { 
-            this.setCapabilityValue(capability, value)
-                .catch(this.error);
-        }, HUE_DEBOUNCE, { "maxWait": HUE_DEBOUNCE });
-        this._sat_debounce = debounce((capability, value) => { 
-            this.setCapabilityValue(capability, value)
-                .catch(this.error);
-        }, SATURATION_DEBOUNCE, { "maxWait": SATURATION_DEBOUNCE });
-        
         this.log(`Tradfri Light ${this.getName()} has been initialized`);
 	}
 
@@ -56,19 +34,23 @@ class MyDevice extends Homey.Device {
 			}
 			
 			if (this.hasCapability("dim")) {
-                this._dim_debounce("dim", light.dimmer / 100);
+                this.setCapabilityValue("dim", light.dimmer / 100)
+                	.catch(this.error);
 			}
 
 			if (this.hasCapability("light_temperature")) {
-				this._temp_debounce("light_temperature", light.colorTemperature / 100);
+				this.setCapabilityValue("light_temperature", light.colorTemperature / 100)
+                    .catch(this.error);
 			}
 
 			if (this.hasCapability("light_hue")) {
-				this._hue_debounce("light_hue", light.hue / 360);
+				this.setCapabilityValue("light_hue", light.hue / 360)
+                    .catch(this.error);
 			}
 
 			if (this.hasCapability("light_saturation")) {
-				this._sat_debounce("light_saturation", light.saturation / 100);
+				this.setCapabilityValue("light_saturation", light.saturation / 100)
+                    .catch(this.error);
 			}
 		}
 	}
