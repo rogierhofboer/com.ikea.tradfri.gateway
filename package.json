@@ -22,6 +22,6 @@
   },
   "homepage": "https://github.com/rogierhofboer/com.ikea.tradfri.gateway#readme",
   "devDependencies": {
-    "homey": "^2.33.3"
+    "homey": "^2.33.10"
   }
 }
